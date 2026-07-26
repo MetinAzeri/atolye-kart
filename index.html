@@ -152,6 +152,89 @@
     color: #a13f2c;
   }
 
+  .card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+  }
+
+  .card-hint {
+    margin: 10px 0 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+  }
+
+  .card-button {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--accent);
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.15s ease;
+  }
+
+  .card-button:disabled {
+    opacity: 0.6;
+    cursor: default;
+  }
+
+  .card-button--secondary {
+    background: transparent;
+    color: var(--accent-dark);
+  }
+
+  .card-form {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
+  }
+
+  .card-form-input {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    color: var(--text-primary);
+    background: #fff;
+  }
+
+  .card-form-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  .card-form-actions {
+    display: flex;
+    gap: 10px;
+  }
+
+  .card-form-actions .card-button {
+    flex: 1;
+  }
+
+  .card-form-message {
+    margin: 16px 0 0;
+    font-size: 13px;
+  }
+
+  .card-form-message--success {
+    color: #3f6b4a;
+  }
+
+  .card-form-message--error {
+    margin: 0;
+    color: #a13f2c;
+  }
+
   @media (max-width: 720px) {
     .products {
       grid-template-columns: 1fr;

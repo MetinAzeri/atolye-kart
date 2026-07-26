@@ -1,6 +1,10 @@
 import React from "https://esm.sh/react@18";
 import { ProductImage } from "./ProductImage.js";
+import { OrderForm } from "./OrderForm.js";
+import { StockNotifyForm } from "./StockNotifyForm.js";
 import { categories } from "../data/categories.js";
+
+const { useState } = React;
 
 const stockLabels = {
   in_stock: "Stokta",
@@ -9,9 +13,14 @@ const stockLabels = {
 };
 
 export function ProductCard({ product }) {
+  const [openForm, setOpenForm] = useState(null);
   const category = categories.find((item) => item.id === product.categoryId);
-  const cardClassName =
-    product.stockStatus === "out_of_stock" ? "product-card product-card--out-of-stock" : "product-card";
+  const isOutOfStock = product.stockStatus === "out_of_stock";
+  const cardClassName = isOutOfStock ? "product-card product-card--out-of-stock" : "product-card";
+
+  function toggleForm(formName) {
+    setOpenForm((current) => (current === formName ? null : formName));
+  }
 
   return React.createElement(
     "div",
@@ -30,6 +39,38 @@ export function ProductCard({ product }) {
       "span",
       { className: `product-stock product-stock--${product.stockStatus.replace(/_/g, "-")}` },
       stockLabels[product.stockStatus]
-    )
+    ),
+    React.createElement(
+      "div",
+      { className: "card-actions" },
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          className: "card-button",
+          onClick: () => toggleForm("order"),
+          disabled: isOutOfStock,
+        },
+        "Sipariş Ver"
+      ),
+      isOutOfStock &&
+        React.createElement(
+          "button",
+          {
+            type: "button",
+            className: "card-button card-button--secondary",
+            onClick: () => toggleForm("stock"),
+          },
+          "Stok Bildirimi İste"
+        )
+    ),
+    isOutOfStock &&
+      React.createElement(
+        "p",
+        { className: "card-hint" },
+        "Bu ürün stokta yok, stok bildirimi talep edebilirsiniz."
+      ),
+    openForm === "order" && React.createElement(OrderForm, { product, onCancel: () => setOpenForm(null) }),
+    openForm === "stock" && React.createElement(StockNotifyForm, { product, onCancel: () => setOpenForm(null) })
   );
 }

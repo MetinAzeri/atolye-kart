@@ -42,7 +42,7 @@ Bileşenler veriyi doğrudan import eder (`import { products } from "../data/pro
 
 ## Webhook Veri Sözleşmesi
 
-İki event tipi: `place_order` ve `request_stock_notification` (henüz uygulanmadı — bir sipariş/stok bildirim formu eklendiğinde bu sözleşmeye uyulmalı). Tüm alan adları **camelCase**.
+İki event tipi: `place_order` ve `request_stock_notification`. Uygulama: `src/lib/webhook.js` (`WEBHOOK_URL` + `sendWebhookEvent(payload)`), `src/components/OrderForm.js` (Sipariş Ver) ve `src/components/StockNotifyForm.js` (Stok Bildirimi İste) — her ikisi de `ProductCard.js` içinden `openForm` state'ine göre koşullu render edilir. Tüm alan adları **camelCase**.
 
 ### Sipariş Ver → `place_order`
 
