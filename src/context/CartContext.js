@@ -22,7 +22,10 @@ export function CartProvider({ children }) {
           item.productId === product.id ? { ...item, quantity: item.quantity + 1 } : item
         );
       }
-      return [...current, { productId: product.id, price: product.price, quantity: 1 }];
+      return [
+        ...current,
+        { productId: product.id, price: product.price, quantity: 1, name: product.name, custom: product.custom },
+      ];
     });
     setToast(`${product.name} sepete eklendi`);
   }

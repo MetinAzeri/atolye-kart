@@ -557,11 +557,66 @@
     }
   }
 
+  .design-stepper {
+    display: flex;
+    gap: 32px;
+    margin-bottom: 32px;
+  }
+
+  .design-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+  }
+
+  .design-step-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .design-step-label {
+    font-size: 14px;
+    font-weight: 600;
+  }
+
+  .design-step--active .design-step-number {
+    border-color: var(--accent);
+    background: var(--accent);
+    color: #fff;
+  }
+
+  .design-step--active .design-step-label {
+    color: var(--text-primary);
+  }
+
+  .design-step--done .design-step-number {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+  }
+
+  .design-step--done .design-step-label {
+    color: var(--accent-dark);
+  }
+
   .design-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px;
     align-items: start;
+  }
+
+  .design-step-panel {
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
   }
 
   .design-picker {
@@ -575,7 +630,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    padding: 24px 16px;
+    padding: 20px 16px;
     border: 1px solid var(--border);
     border-radius: 16px;
     background: var(--card-bg);
@@ -597,34 +652,10 @@
     color: var(--accent-dark);
   }
 
-  .design-preview {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 320px;
-    border-radius: 16px;
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
-    color: var(--accent);
-  }
-
-  .design-preview-hint {
-    margin: 0;
-    font-size: 14px;
-    color: var(--text-secondary);
-  }
-
-  .design-color-label {
-    margin: 32px 0 12px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--text-primary);
-  }
-
-  .design-color-row {
-    display: flex;
-    gap: 14px;
+  .design-color-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
   }
 
   .design-color-swatch {
@@ -640,6 +671,83 @@
     box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
   }
 
+  .design-pattern-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .design-pattern-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--card-bg);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .design-pattern-button:hover {
+    border-color: var(--accent);
+  }
+
+  .design-pattern-button--selected {
+    border-color: var(--accent);
+    color: var(--accent-dark);
+  }
+
+  .design-text-step {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .design-text-count {
+    margin: 0;
+    font-size: 12px;
+    color: var(--text-secondary);
+    text-align: right;
+  }
+
+  .design-step-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 24px;
+  }
+
+  .design-preview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 340px;
+    border-radius: 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+    color: var(--accent);
+  }
+
+  .design-preview-hint {
+    margin: 0;
+    font-size: 14px;
+    color: var(--text-secondary);
+  }
+
+  .cart-item-image--custom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg);
+  }
+
   @media (max-width: 720px) {
     .toast {
       left: 16px;
@@ -648,8 +756,28 @@
       text-align: center;
     }
 
+    .design-stepper {
+      gap: 16px;
+    }
+
+    .design-step-label {
+      display: none;
+    }
+
     .design-section {
       grid-template-columns: 1fr;
+    }
+
+    .design-section .design-preview {
+      order: -1;
+    }
+
+    .design-color-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .design-pattern-grid {
+      grid-template-columns: repeat(2, 1fr);
     }
 
     .products {

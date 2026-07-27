@@ -5,8 +5,8 @@ import { useCart } from "../context/CartContext.js";
 const navItems = [
   { to: "/", label: "Ana Sayfa" },
   { to: "/urunler", label: "Ürünler" },
-  { to: "/biz-kimiz", label: "Biz Kimiz" },
   { to: "/kendin-tasarla", label: "Kendin Tasarla" },
+  { to: "/biz-kimiz", label: "Biz Kimiz" },
   { to: "/sepet", label: "Sepet" },
 ];
 

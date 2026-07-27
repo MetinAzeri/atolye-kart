@@ -1,6 +1,5 @@
 import React from "https://esm.sh/react@18";
 import { sendWebhookEvent } from "../lib/webhook.js";
-import { products } from "../data/products.js";
 import { useCart } from "../context/CartContext.js";
 
 const { useState } = React;
@@ -27,19 +26,18 @@ export function CheckoutForm({ onCancel }) {
     setFeedback(null);
     try {
       await Promise.all(
-        items.map((item) => {
-          const product = products.find((p) => p.id === item.productId);
-          return sendWebhookEvent({
+        items.map((item) =>
+          sendWebhookEvent({
             event: "place_order",
             name: name.trim(),
             productId: item.productId,
-            productName: product ? product.name : item.productId,
+            productName: item.name,
             phone: phone.trim(),
             email: email.trim(),
             quantity: item.quantity,
             source: "atolyekart",
-          });
-        })
+          })
+        )
       );
       clearCart();
       setFeedback({ type: "success", text: "Siparişiniz alındı, teşekkürler!" });

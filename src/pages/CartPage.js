@@ -2,6 +2,7 @@ import React from "https://esm.sh/react@18";
 import { products } from "../data/products.js";
 import { useCart } from "../context/CartContext.js";
 import { CheckoutForm } from "../components/CheckoutForm.js";
+import { CeramicPreview } from "../components/CeramicPreview.js";
 
 const { useState } = React;
 
@@ -25,15 +26,27 @@ export function CartPage() {
         return React.createElement(
           "div",
           { key: item.productId, className: "cart-item" },
-          React.createElement("img", {
-            className: "cart-item-image",
-            src: product ? product.images[0] : "",
-            alt: "",
-          }),
+          item.custom
+            ? React.createElement(
+                "div",
+                { className: "cart-item-image cart-item-image--custom" },
+                React.createElement(CeramicPreview, {
+                  type: item.custom.type,
+                  color: item.custom.color,
+                  pattern: item.custom.pattern,
+                  text: item.custom.text,
+                  size: 56,
+                })
+              )
+            : React.createElement("img", {
+                className: "cart-item-image",
+                src: product ? product.images[0] : "",
+                alt: "",
+              }),
           React.createElement(
             "div",
             { className: "cart-item-info" },
-            React.createElement("p", { className: "cart-item-name" }, product ? product.name : item.productId),
+            React.createElement("p", { className: "cart-item-name" }, item.name),
             React.createElement(
               "div",
               { className: "cart-qty-controls" },
