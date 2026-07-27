@@ -511,6 +511,72 @@
     color: #a13f2c;
   }
 
+  .card-form-row {
+    display: flex;
+    gap: 10px;
+  }
+
+  .card-form-row .card-form-input {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .payment-card-preview {
+    padding: 20px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 28px;
+    min-height: 110px;
+  }
+
+  .payment-card-number {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: 2px;
+  }
+
+  .payment-card-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+  }
+
+  .payment-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    opacity: 0.9;
+  }
+
+  .payment-card-expiry {
+    font-size: 13px;
+    font-weight: 600;
+    opacity: 0.9;
+  }
+
+  .payment-spinner {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 8px;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-top-color: #fff;
+    border-radius: 50%;
+    vertical-align: -1px;
+    animation: payment-spin 0.7s linear infinite;
+  }
+
+  @keyframes payment-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
   .cart-items {
     display: flex;
     flex-direction: column;

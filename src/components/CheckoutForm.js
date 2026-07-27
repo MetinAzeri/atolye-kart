@@ -1,19 +1,20 @@
 import React from "https://esm.sh/react@18";
 import { sendWebhookEvent } from "../lib/webhook.js";
 import { useCart } from "../context/CartContext.js";
+import { PaymentForm } from "./PaymentForm.js";
 
 const { useState } = React;
 
 export function CheckoutForm({ onCancel }) {
   const { items, clearCart } = useCart();
+  const [step, setStep] = useState("contact");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
 
-  async function handleSubmit(event) {
+  function handleContactSubmit(event) {
     event.preventDefault();
 
     if (phone.length < 10 || phone.length > 11) {
@@ -21,31 +22,26 @@ export function CheckoutForm({ onCancel }) {
       return;
     }
     setPhoneError(false);
+    setStep("payment");
+  }
 
-    setSubmitting(true);
-    setFeedback(null);
-    try {
-      await Promise.all(
-        items.map((item) =>
-          sendWebhookEvent({
-            event: "place_order",
-            name: name.trim(),
-            productId: item.productId,
-            productName: item.name,
-            phone: phone.trim(),
-            email: email.trim(),
-            quantity: item.quantity,
-            source: "atolyekart",
-          })
-        )
-      );
-      clearCart();
-      setFeedback({ type: "success", text: "Siparişiniz alındı, teşekkürler!" });
-    } catch (error) {
-      setFeedback({ type: "error", text: "Bir hata oluştu, lütfen tekrar deneyin." });
-    } finally {
-      setSubmitting(false);
-    }
+  async function handleConfirmPayment() {
+    await Promise.all(
+      items.map((item) =>
+        sendWebhookEvent({
+          event: "place_order",
+          name: name.trim(),
+          productId: item.productId,
+          productName: item.name,
+          phone: phone.trim(),
+          email: email.trim(),
+          quantity: item.quantity,
+          source: "atolyekart",
+        })
+      )
+    );
+    clearCart();
+    setFeedback({ type: "success", text: "Ödemeniz alındı, siparişiniz oluşturuldu!" });
   }
 
   if (feedback && feedback.type === "success") {
@@ -56,9 +52,16 @@ export function CheckoutForm({ onCancel }) {
     );
   }
 
+  if (step === "payment") {
+    return React.createElement(PaymentForm, {
+      onConfirm: handleConfirmPayment,
+      onBack: () => setStep("contact"),
+    });
+  }
+
   return React.createElement(
     "form",
-    { className: "card-form", onSubmit: handleSubmit },
+    { className: "card-form", onSubmit: handleContactSubmit },
     React.createElement("input", {
       className: "card-form-input",
       type: "text",
@@ -92,25 +95,13 @@ export function CheckoutForm({ onCancel }) {
       onChange: (event) => setEmail(event.target.value),
       required: true,
     }),
-    feedback &&
-      feedback.type === "error" &&
-      React.createElement("p", { className: "card-form-message card-form-message--error" }, feedback.text),
     React.createElement(
       "div",
       { className: "card-form-actions" },
+      React.createElement("button", { type: "submit", className: "card-button" }, "Devam"),
       React.createElement(
         "button",
-        { type: "submit", className: "card-button", disabled: submitting },
-        submitting ? "Gönderiliyor..." : "Gönder"
-      ),
-      React.createElement(
-        "button",
-        {
-          type: "button",
-          className: "card-button card-button--secondary",
-          onClick: onCancel,
-          disabled: submitting,
-        },
+        { type: "button", className: "card-button card-button--secondary", onClick: onCancel },
         "Vazgeç"
       )
     )
