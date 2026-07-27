@@ -42,7 +42,7 @@ Bileşenler veriyi doğrudan import eder (`import { products } from "../data/pro
 
 ## Webhook Veri Sözleşmesi
 
-İki event tipi: `place_order` ve `request_stock_notification`. Uygulama: `src/lib/webhook.js` (`WEBHOOK_URL` + `sendWebhookEvent(payload)`), `src/components/OrderForm.js` (Sipariş Ver) ve `src/components/StockNotifyForm.js` (Stok Bildirimi İste) — her ikisi de `ProductCard.js` içinden `openForm` state'ine göre koşullu render edilir. Tüm alan adları **camelCase**.
+Üç event tipi: `place_order`, `request_stock_notification` ve `workshop_registration`. Uygulama: `src/lib/webhook.js` (`WEBHOOK_URL` + `sendWebhookEvent(payload)`). Tüm alan adları **camelCase**.
 
 ### Sipariş Ver → `place_order`
 
@@ -74,6 +74,23 @@ Bileşenler veriyi doğrudan import eder (`import { products } from "../data/pro
 
 `productId`/`productName`, gönderilen `product` objesinden (`src/data/products.js`) alınır — üründen bağımsız uydurma değer geçirilmez.
 
+### Atölyeler → `workshop_registration`
+
+```json
+{
+  "event": "workshop_registration",
+  "name": "Ayşe Yılmaz",
+  "phone": "+905XXXXXXXXX",
+  "email": "ayse@example.com",
+  "participantCount": 2,
+  "workshopDate": "2026-08-04",
+  "workshopType": "Baba-Çocuk",
+  "source": "atolyekart"
+}
+```
+
+`workshopDate`/`workshopType`, seçilen atölye objesinden (`src/data/workshops.js`) alınır. Uygulama: `src/components/RegistrationForm.js`, `src/components/WorkshopDetail.js` içinden "Katıl" ile açılır.
+
 ## Quick Reference
 
 | Konu | Kural |
@@ -83,4 +100,5 @@ Bileşenler veriyi doğrudan import eder (`import { products } from "../data/pro
 | Kategori verisi | `src/data/categories.js`, `export const categories` |
 | Webhook — Sipariş Ver | `event: "place_order"` + `name`, `productId`, `productName`, `phone`, `email`, `quantity`, `source` |
 | Webhook — Stok Bildirimi İste | `event: "request_stock_notification"` + `name`, `productId`, `productName`, `email`, `source` |
+| Webhook — Atölye Kaydı | `event: "workshop_registration"` + `name`, `phone`, `email`, `participantCount`, `workshopDate`, `workshopType`, `source` |
 | İsimlendirme | camelCase |

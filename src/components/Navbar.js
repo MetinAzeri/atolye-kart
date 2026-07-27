@@ -7,6 +7,7 @@ const navItems = [
   { to: "/urunler", label: "Ürünler" },
   { to: "/kendin-tasarla", label: "Kendin Tasarla" },
   { to: "/biz-kimiz", label: "Biz Kimiz" },
+  { to: "/atolyeler", label: "Atölyeler" },
   { to: "/sepet", label: "Sepet" },
 ];
 
