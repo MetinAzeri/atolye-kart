@@ -73,6 +73,49 @@
     color: var(--text-secondary);
   }
 
+  .about-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    margin-bottom: 56px;
+  }
+
+  .about-title {
+    margin: 0 0 16px;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: 0.3px;
+  }
+
+  .about-text {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text-secondary);
+  }
+
+  .about-gallery {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    grid-template-rows: repeat(2, 140px);
+    gap: 12px;
+  }
+
+  .about-gallery img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+  }
+
+  .about-gallery img:first-child {
+    grid-row: 1 / 3;
+  }
+
   .products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -269,6 +312,30 @@
     .workshop-logo {
       height: 70px;
       margin: 0 auto;
+    }
+
+    .about-section {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      text-align: center;
+    }
+
+    .about-text {
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    .about-gallery {
+      grid-template-columns: 1fr;
+      grid-template-rows: none;
+    }
+
+    .about-gallery img {
+      height: 220px;
+    }
+
+    .about-gallery img:first-child {
+      grid-row: auto;
     }
   }
 </style>

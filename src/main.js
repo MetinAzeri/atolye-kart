@@ -3,6 +3,7 @@ import { createRoot } from "https://esm.sh/react-dom@18/client";
 import { products } from "./data/products.js";
 import { ProductList } from "./components/ProductList.js";
 import { QrCode } from "./components/QrCode.js";
+import { AboutSection } from "./components/AboutSection.js";
 
 const REPO_URL = "https://github.com/MetinAzeri/atolye-kart";
 
@@ -25,6 +26,7 @@ function App() {
       ),
       React.createElement(QrCode, { value: REPO_URL })
     ),
+    React.createElement(AboutSection),
     React.createElement(ProductList, { products })
   );
 }
