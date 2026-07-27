@@ -19,7 +19,7 @@ const paths = {
   }),
 };
 
-export function ProductTypeIcon({ type, size = 48 }) {
+export function ProductTypeIcon({ type, size = 48, style }) {
   return React.createElement(
     "svg",
     {
@@ -31,6 +31,7 @@ export function ProductTypeIcon({ type, size = 48 }) {
       strokeWidth: 3,
       strokeLinecap: "round",
       strokeLinejoin: "round",
+      style,
     },
     paths[type]
   );
