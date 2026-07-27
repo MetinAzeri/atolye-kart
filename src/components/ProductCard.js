@@ -4,7 +4,7 @@ import { StockNotifyForm } from "./StockNotifyForm.js";
 import { categories } from "../data/categories.js";
 import { useCart } from "../context/CartContext.js";
 
-const { useState } = React;
+const { useState, useEffect } = React;
 
 const stockLabels = {
   in_stock: "Stokta",
@@ -14,10 +14,22 @@ const stockLabels = {
 
 export function ProductCard({ product }) {
   const [showStockForm, setShowStockForm] = useState(false);
+  const [justAdded, setJustAdded] = useState(false);
   const { addItem } = useCart();
   const category = categories.find((item) => item.id === product.categoryId);
   const isOutOfStock = product.stockStatus === "out_of_stock";
   const cardClassName = isOutOfStock ? "product-card product-card--out-of-stock" : "product-card";
+
+  useEffect(() => {
+    if (!justAdded) return;
+    const timer = setTimeout(() => setJustAdded(false), 1500);
+    return () => clearTimeout(timer);
+  }, [justAdded]);
+
+  function handleAddToCart() {
+    addItem(product);
+    setJustAdded(true);
+  }
 
   return React.createElement(
     "div",
@@ -45,10 +57,10 @@ export function ProductCard({ product }) {
         {
           type: "button",
           className: "card-button",
-          onClick: () => addItem(product),
+          onClick: handleAddToCart,
           disabled: isOutOfStock,
         },
-        "Sipariş Ver"
+        justAdded ? "Eklendi ✓" : "Sipariş Ver"
       ),
       isOutOfStock &&
         React.createElement(

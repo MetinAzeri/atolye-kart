@@ -1,11 +1,18 @@
 import React from "https://esm.sh/react@18";
 
-const { createContext, useContext, useState, useMemo } = React;
+const { createContext, useContext, useState, useMemo, useEffect } = React;
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([]);
+  const [toast, setToast] = useState(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 2500);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
   function addItem(product) {
     setItems((current) => {
@@ -17,6 +24,7 @@ export function CartProvider({ children }) {
       }
       return [...current, { productId: product.id, price: product.price, quantity: 1 }];
     });
+    setToast(`${product.name} sepete eklendi`);
   }
 
   function incrementItem(productId) {
@@ -41,8 +49,8 @@ export function CartProvider({ children }) {
   const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
   const value = useMemo(
-    () => ({ items, addItem, incrementItem, decrementItem, clearCart, totalCount, totalPrice }),
-    [items]
+    () => ({ items, addItem, incrementItem, decrementItem, clearCart, totalCount, totalPrice, toast }),
+    [items, toast]
   );
 
   return React.createElement(CartContext.Provider, { value }, children);

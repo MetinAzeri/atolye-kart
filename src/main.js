@@ -3,6 +3,7 @@ import { createRoot } from "https://esm.sh/react-dom@18/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext.js";
 import { Navbar } from "./components/Navbar.js";
+import { Toast } from "./components/Toast.js";
 import { HomePage } from "./pages/HomePage.js";
 import { ProductsPage } from "./pages/ProductsPage.js";
 import { AboutPage } from "./pages/AboutPage.js";
@@ -16,6 +17,7 @@ function App() {
       HashRouter,
       null,
       React.createElement(Navbar),
+      React.createElement(Toast),
       React.createElement(
         "div",
         { className: "page" },
