@@ -6,41 +6,113 @@ const { useId, createElement: h, Fragment } = React;
 const NEUTRAL_COLOR = "#e4dcd0";
 const FONT_STACK = '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
 
+const leafPath = "M12 4 C18 8 18 16 12 20 C6 16 6 8 12 4 Z";
+
 function patternTile(patternId, type, tint) {
   switch (type) {
-    case "lines":
-      return h(
-        "pattern",
-        { id: patternId, width: 8, height: 8, patternUnits: "userSpaceOnUse", patternTransform: "rotate(45)" },
-        h("line", { x1: 0, y1: 0, x2: 0, y2: 8, stroke: tint, strokeWidth: 2 })
-      );
     case "dots":
+      // Benekler — reaktif sır: düzensiz boyut/opasitede lekeler + küçük sıçrama damlaları
       return h(
         "pattern",
-        { id: patternId, width: 14, height: 14, patternUnits: "userSpaceOnUse" },
-        h("circle", { cx: 7, cy: 7, r: 2, fill: tint })
+        { id: patternId, width: 50, height: 50, patternUnits: "userSpaceOnUse" },
+        h("circle", { cx: 10, cy: 12, r: 3, fill: tint, opacity: 0.7 }),
+        h("circle", { cx: 28, cy: 8, r: 5, fill: tint, opacity: 0.55 }),
+        h("circle", { cx: 31, cy: 11, r: 1, fill: tint, opacity: 0.6 }),
+        h("circle", { cx: 40, cy: 20, r: 2.5, fill: tint, opacity: 0.8 }),
+        h("circle", { cx: 15, cy: 30, r: 4, fill: tint, opacity: 0.6 }),
+        h("circle", { cx: 35, cy: 38, r: 3.5, fill: tint, opacity: 0.75 }),
+        h("circle", { cx: 37.5, cy: 40, r: 1.2, fill: tint, opacity: 0.55 }),
+        h("circle", { cx: 6, cy: 42, r: 2, fill: tint, opacity: 0.65 }),
+        h("circle", { cx: 44, cy: 44, r: 2.5, fill: tint, opacity: 0.5 })
       );
-    case "leaf":
+    case "brush":
+      // Fırça Darbeleri — kalınlığı değişen, farklı açılarda dolgulu fırça izleri
       return h(
         "pattern",
-        { id: patternId, width: 24, height: 24, patternUnits: "userSpaceOnUse" },
-        h("path", { d: "M12 4 C18 8 18 16 12 20 C6 16 6 8 12 4 Z", fill: tint })
+        { id: patternId, width: 60, height: 40, patternUnits: "userSpaceOnUse" },
+        h(
+          "g",
+          { transform: "translate(5 8) rotate(-15)", opacity: 0.75 },
+          h("path", { d: "M0 3 Q10 0 20 2 Q10 5 0 3 Z", fill: tint })
+        ),
+        h(
+          "g",
+          { transform: "translate(28 5) rotate(20) scale(0.8)", opacity: 0.85 },
+          h("path", { d: "M0 3 Q10 0 20 2 Q10 5 0 3 Z", fill: tint })
+        ),
+        h(
+          "g",
+          { transform: "translate(8 25) rotate(-30) scale(1.1)", opacity: 0.65 },
+          h("path", { d: "M0 3 Q10 0 20 2 Q10 5 0 3 Z", fill: tint })
+        ),
+        h(
+          "g",
+          { transform: "translate(35 28) rotate(10) scale(0.9)", opacity: 0.7 },
+          h("path", { d: "M0 3 Q10 0 20 2 Q10 5 0 3 Z", fill: tint })
+        )
       );
-    case "triangle":
+    case "olive":
+      // Zeytin Dalı — kavisli dal + iki yana alternatif yerleşen küçük yapraklar
       return h(
         "pattern",
-        { id: patternId, width: 16, height: 16, patternUnits: "userSpaceOnUse" },
-        h("path", { d: "M0 16 L8 4 L16 16 Z", fill: tint })
+        { id: patternId, width: 70, height: 70, patternUnits: "userSpaceOnUse" },
+        h("path", {
+          d: "M8 65 Q30 45 32 25 Q34 10 45 2",
+          fill: "none",
+          stroke: tint,
+          strokeWidth: 1.5,
+          strokeLinecap: "round",
+          opacity: 0.8,
+        }),
+        h("ellipse", { cx: 15, cy: 55, rx: 6, ry: 2.5, fill: tint, opacity: 0.7, transform: "rotate(-30 15 55)" }),
+        h("ellipse", { cx: 23, cy: 44, rx: 6, ry: 2.5, fill: tint, opacity: 0.75, transform: "rotate(40 23 44)" }),
+        h("ellipse", { cx: 29, cy: 32, rx: 6, ry: 2.5, fill: tint, opacity: 0.7, transform: "rotate(-35 29 32)" }),
+        h("ellipse", { cx: 34, cy: 19, rx: 6, ry: 2.5, fill: tint, opacity: 0.75, transform: "rotate(45 34 19)" }),
+        h("ellipse", { cx: 41, cy: 9, rx: 5, ry: 2.2, fill: tint, opacity: 0.7, transform: "rotate(-30 41 9)" })
       );
     case "wave":
+      // Dalgalı Çizgiler — el çizimi hissi veren, asimetrik genlikli dalga hatları
       return h(
         "pattern",
-        { id: patternId, width: 24, height: 12, patternUnits: "userSpaceOnUse" },
-        h("path", { d: "M0 6 Q6 0 12 6 T24 6", fill: "none", stroke: tint, strokeWidth: 2 })
+        { id: patternId, width: 80, height: 24, patternUnits: "userSpaceOnUse" },
+        h("path", {
+          d: "M0 8 Q8 2 18 9 Q26 14 34 7 Q42 1 50 8 Q60 13 68 6 Q74 2 80 8",
+          fill: "none",
+          stroke: tint,
+          strokeWidth: 1.5,
+          strokeLinecap: "round",
+          opacity: 0.8,
+        }),
+        h("path", {
+          d: "M0 18 Q10 14 20 19 Q28 22 36 17 Q46 12 54 18 Q62 21 70 16 Q76 13 80 18",
+          fill: "none",
+          stroke: tint,
+          strokeWidth: 1.2,
+          strokeLinecap: "round",
+          opacity: 0.6,
+        })
+      );
+    case "leaves":
+      // Yaprak Serpintisi — aynı yaprak formunun farklı açı/boyutlarda serpiştirilmesi
+      return h(
+        "pattern",
+        { id: patternId, width: 90, height: 90, patternUnits: "userSpaceOnUse" },
+        h("path", { d: leafPath, fill: tint, opacity: 0.7, transform: "translate(10 10) rotate(15) scale(0.8)" }),
+        h("path", { d: leafPath, fill: tint, opacity: 0.8, transform: "translate(55 15) rotate(-50) scale(1)" }),
+        h("path", { d: leafPath, fill: tint, opacity: 0.6, transform: "translate(30 50) rotate(110) scale(0.7)" }),
+        h("path", { d: leafPath, fill: tint, opacity: 0.75, transform: "translate(70 60) rotate(-20) scale(0.9)" }),
+        h("path", { d: leafPath, fill: tint, opacity: 0.65, transform: "translate(15 70) rotate(60) scale(0.85)" })
       );
     default:
       return null;
   }
+}
+
+function computeFontSize(text) {
+  const len = text.length;
+  if (len <= 6) return 18;
+  if (len >= 12) return 11;
+  return Math.round(18 - ((len - 6) / 6) * 7);
 }
 
 function TextLayer({ x, y, text, baseColor }) {
@@ -52,7 +124,7 @@ function TextLayer({ x, y, text, baseColor }) {
       x,
       y,
       textAnchor: "middle",
-      fontSize: 16,
+      fontSize: computeFontSize(text),
       fontWeight: 600,
       fontFamily: FONT_STACK,
       fill,

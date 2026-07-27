@@ -30,11 +30,11 @@ const colorPalette = [
 
 const patternOptions = [
   { id: null, label: "Desensiz" },
-  { id: "lines", label: "İnce Çizgiler" },
-  { id: "dots", label: "Noktalar" },
-  { id: "leaf", label: "Yaprak Motifi" },
-  { id: "triangle", label: "Geometrik Üçgen" },
-  { id: "wave", label: "Dalga" },
+  { id: "dots", label: "Benekler" },
+  { id: "brush", label: "Fırça Darbeleri" },
+  { id: "olive", label: "Zeytin Dalı" },
+  { id: "wave", label: "Dalgalı Çizgiler" },
+  { id: "leaves", label: "Yaprak Serpintisi" },
 ];
 
 const steps = [
