@@ -6,6 +6,7 @@ const navItems = [
   { to: "/", label: "Ana Sayfa" },
   { to: "/urunler", label: "Ürünler" },
   { to: "/biz-kimiz", label: "Biz Kimiz" },
+  { to: "/kendin-tasarla", label: "Kendin Tasarla" },
   { to: "/sepet", label: "Sepet" },
 ];
 
