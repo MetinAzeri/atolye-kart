@@ -124,24 +124,6 @@
     }
   }
 
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-    margin-bottom: 48px;
-  }
-
-  .header-text {
-    text-align: left;
-  }
-
-  .workshop-logo {
-    display: block;
-    height: 90px;
-    width: auto;
-  }
-
   .tagline {
     margin: 12px 0 0;
     font-size: 16px;
@@ -165,18 +147,51 @@
   }
 
   .hero {
-    margin-bottom: 56px;
+    margin-bottom: 40px;
     text-align: center;
+  }
+
+  .hero-image-wrap {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+    margin-bottom: 24px;
   }
 
   .hero-image {
     display: block;
     width: 100%;
-    height: 220px;
+    height: 320px;
     object-fit: cover;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
-    margin-bottom: 24px;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 24px;
+    background: rgba(61, 43, 31, 0.42);
+  }
+
+  .hero-title {
+    margin: 0;
+    font-size: 40px;
+    font-weight: 700;
+    color: #fff;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .hero-tagline {
+    margin: 12px 0 0;
+    font-size: 16px;
+    font-style: italic;
+    color: #fff;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   }
 
   .hero-cta {
@@ -195,25 +210,83 @@
     opacity: 0.9;
   }
 
+  .trust-strip {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin: 0 0 56px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+
+  .trust-strip span:not(:last-child) {
+    padding-right: 20px;
+    border-right: 1px solid var(--border);
+  }
+
   .home-section {
     margin-bottom: 56px;
   }
 
-  .home-teaser {
+  .ceramic-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+  }
+
+  .ceramic-row-image {
+    width: 100%;
+    height: 260px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+  }
+
+  .cta-band {
+    margin-bottom: 56px;
+    padding: 40px 32px;
+    border-radius: 16px;
+    background: #fdf1e6;
+    text-align: center;
+  }
+
+  .cta-band-title {
+    margin: 0 0 12px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .cta-band-text {
+    margin: 0 auto 24px;
     max-width: 52ch;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--text-secondary);
   }
 
-  .home-teaser-link {
-    display: inline-block;
-    margin-top: 12px;
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--accent-dark);
-    text-decoration: none;
+  .footer {
+    margin-top: 64px;
+    padding: 40px 24px 0;
+    background: var(--card-bg);
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
   }
 
-  .home-teaser-link:hover {
-    text-decoration: underline;
+  .footer-copyright {
+    margin: 0;
+    padding-bottom: 40px;
+    font-size: 13px;
+    color: var(--text-secondary);
   }
 
   .about-section {
@@ -784,20 +857,6 @@
       grid-template-columns: 1fr;
     }
 
-    .header {
-      flex-direction: column;
-      text-align: center;
-    }
-
-    .header-text {
-      text-align: center;
-    }
-
-    .workshop-logo {
-      height: 70px;
-      margin: 0 auto;
-    }
-
     .about-section {
       grid-template-columns: 1fr;
       gap: 24px;
@@ -820,6 +879,41 @@
 
     .about-gallery img:first-child {
       grid-row: auto;
+    }
+
+    .hero-image {
+      height: 240px;
+    }
+
+    .hero-title {
+      font-size: 28px;
+    }
+
+    .trust-strip {
+      gap: 12px;
+      font-size: 11px;
+    }
+
+    .trust-strip span:not(:last-child) {
+      padding-right: 12px;
+    }
+
+    .ceramic-row {
+      grid-template-columns: 1fr;
+      gap: 16px;
+      text-align: center;
+    }
+
+    .ceramic-row-image {
+      height: 220px;
+    }
+
+    .ceramic-row p {
+      order: 2;
+    }
+
+    .cta-band {
+      padding: 32px 20px;
     }
   }
 </style>

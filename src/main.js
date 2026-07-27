@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext.js";
 import { Navbar } from "./components/Navbar.js";
 import { Toast } from "./components/Toast.js";
+import { Footer } from "./components/Footer.js";
 import { HomePage } from "./pages/HomePage.js";
 import { ProductsPage } from "./pages/ProductsPage.js";
 import { AboutPage } from "./pages/AboutPage.js";
@@ -31,7 +32,8 @@ function App() {
           React.createElement(Route, { path: "/sepet", element: React.createElement(CartPage) }),
           React.createElement(Route, { path: "/kendin-tasarla", element: React.createElement(DesignPage) })
         )
-      )
+      ),
+      React.createElement(Footer)
     )
   );
 }
