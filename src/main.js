@@ -16,7 +16,11 @@ function App() {
       React.createElement(
         "div",
         { className: "header-text" },
-        React.createElement("h1", { className: "workshop-name" }, "Kilhane Atölye"),
+        React.createElement("img", {
+          className: "workshop-logo",
+          src: "assets/logo.png",
+          alt: "Kilhane Atölye",
+        }),
         React.createElement("p", { className: "tagline" }, '"Toprağın sabırla şekle dönüştüğü yer."')
       ),
       React.createElement(QrCode, { value: REPO_URL })
