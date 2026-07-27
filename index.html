@@ -85,6 +85,65 @@
     color: var(--accent);
   }
 
+  .navbar-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-shrink: 0;
+  }
+
+  .navbar-account {
+    position: relative;
+  }
+
+  .navbar-login-button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--text-primary);
+    font-size: 14px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .navbar-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--text-primary);
+    white-space: nowrap;
+  }
+
+  .navbar-logout-button {
+    border: none;
+    background: none;
+    padding: 0;
+    color: var(--accent-dark);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .navbar-login-dropdown {
+    position: absolute;
+    top: calc(100% + 12px);
+    right: 0;
+    z-index: 50;
+    width: 240px;
+    padding: 20px;
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.12);
+  }
+
   .navbar-cart {
     display: flex;
     align-items: center;
@@ -121,6 +180,14 @@
       gap: 16px;
       flex-wrap: wrap;
       justify-content: center;
+    }
+
+    .navbar-login-dropdown {
+      left: 50%;
+      right: auto;
+      transform: translateX(-50%);
+      width: calc(100vw - 48px);
+      max-width: 280px;
     }
   }
 

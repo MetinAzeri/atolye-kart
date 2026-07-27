@@ -1,13 +1,15 @@
 import React from "https://esm.sh/react@18";
 import { sendWebhookEvent } from "../lib/webhook.js";
 import { useCart } from "../context/CartContext.js";
+import { useAuth } from "../context/AuthContext.js";
 import { PaymentForm } from "./PaymentForm.js";
 
 const { useState } = React;
 
 export function CheckoutForm({ onCancel }) {
   const { items, clearCart } = useCart();
-  const [step, setStep] = useState("contact");
+  const { user } = useAuth();
+  const [step, setStep] = useState(user ? "payment" : "contact");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
@@ -30,11 +32,11 @@ export function CheckoutForm({ onCancel }) {
       items.map((item) =>
         sendWebhookEvent({
           event: "place_order",
-          name: name.trim(),
+          name: user ? user.username : name.trim(),
           productId: item.productId,
           productName: item.name,
-          phone: phone.trim(),
-          email: email.trim(),
+          ...(phone.trim() ? { phone: phone.trim() } : {}),
+          ...(email.trim() ? { email: email.trim() } : {}),
           quantity: item.quantity,
           source: "atolyekart",
         })
@@ -55,7 +57,7 @@ export function CheckoutForm({ onCancel }) {
   if (step === "payment") {
     return React.createElement(PaymentForm, {
       onConfirm: handleConfirmPayment,
-      onBack: () => setStep("contact"),
+      onBack: user ? onCancel : () => setStep("contact"),
     });
   }
 
