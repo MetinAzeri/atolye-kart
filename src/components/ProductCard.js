@@ -8,7 +8,7 @@ const { useState } = React;
 
 const stockLabels = {
   in_stock: "Stokta",
-  low_stock: "Az Stokta",
+  low_stock: "Stokta Az",
   out_of_stock: "Tükendi",
 };
 
