@@ -172,7 +172,7 @@ export function DesignPage() {
                       : "design-pattern-button",
                   onClick: () => setPattern(item.id),
                 },
-                React.createElement(CeramicPreview, { type, color, pattern: item.id, size: 56 }),
+                React.createElement(CeramicPreview, { type, color, pattern: item.id, size: 80 }),
                 React.createElement("span", null, item.label)
               )
             )

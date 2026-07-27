@@ -143,6 +143,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
 
   const gradId = `grad-${uid}`;
   const wellGradId = `well-${uid}`;
+  const shadowGradId = `shadow-${uid}`;
   const clipId = `clip-${uid}`;
   const patternId = `pattern-${uid}`;
 
@@ -150,15 +151,22 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
     h(
       "linearGradient",
       { key: "g", id: gradId, x1: "0%", y1: "0%", x2: "100%", y2: "0%" },
-      h("stop", { offset: "0%", stopColor: light }),
+      h("stop", { offset: "0%", stopColor: dark }),
       h("stop", { offset: "45%", stopColor: base }),
-      h("stop", { offset: "100%", stopColor: dark })
+      h("stop", { offset: "100%", stopColor: light })
     ),
     h(
       "radialGradient",
       { key: "w", id: wellGradId, cx: "35%", cy: "35%", r: "75%" },
       h("stop", { offset: "0%", stopColor: light }),
       h("stop", { offset: "100%", stopColor: dark })
+    ),
+    h(
+      "radialGradient",
+      { key: "s", id: shadowGradId, cx: "50%", cy: "50%", r: "50%" },
+      h("stop", { offset: "0%", stopColor: "#000", stopOpacity: 0.28 }),
+      h("stop", { offset: "70%", stopColor: "#000", stopOpacity: 0.12 }),
+      h("stop", { offset: "100%", stopColor: "#000", stopOpacity: 0 })
     ),
   ];
 
@@ -172,24 +180,44 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
       Fragment,
       null,
       h("ellipse", { cx: 100, cy: 100, rx: 85, ry: 50, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
+      h("ellipse", {
+        cx: 100,
+        cy: 99,
+        rx: 80,
+        ry: 46,
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1,
+        opacity: 0.5,
+      }),
       h("ellipse", { cx: 100, cy: 103, rx: 60, ry: 35, fill: `url(#${wellGradId})` })
     );
     textPos = { x: 100, y: 108 };
   } else if (type === "cup") {
     const bodyPath = "M58 55 L142 55 L132 160 Q132 170 122 170 L78 170 Q68 170 68 160 Z";
+    const handlePath = "M138 74 C182 79 190 156 138 161 L138 145 C162 141 166 90 138 88 Z";
     clipShape = h("path", { d: bodyPath });
     shapeElements = h(
       Fragment,
       null,
+      h("path", { d: handlePath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 1.5 }),
       h("path", {
-        d: "M138 82 C172 86 174 148 138 152 L138 140 C160 137 158 97 138 94 Z",
-        fill: `url(#${gradId})`,
-        stroke: edge,
-        strokeWidth: 1.5,
+        d: "M180 82 C186 105 184 138 140 156",
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1,
+        opacity: 0.55,
       }),
       h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
       h("ellipse", { cx: 100, cy: 55, rx: 42, ry: 10, fill: dark }),
-      h("ellipse", { cx: 100, cy: 55, rx: 42, ry: 10, fill: "none", stroke: edge, strokeWidth: 2 })
+      h("ellipse", { cx: 100, cy: 55, rx: 42, ry: 10, fill: "none", stroke: edge, strokeWidth: 2 }),
+      h("path", {
+        d: "M62 51 Q100 44 138 51",
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1.2,
+        opacity: 0.6,
+      })
     );
     textPos = { x: 100, y: 118 };
   } else if (type === "tray") {
@@ -208,6 +236,18 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         stroke: edge,
         strokeWidth: 2,
       }),
+      h("rect", {
+        x: 26,
+        y: 61,
+        width: 148,
+        height: 83,
+        rx: 25,
+        ry: 25,
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1,
+        opacity: 0.5,
+      }),
       h("rect", { x: 42, y: 72, width: 116, height: 61, rx: 18, ry: 18, fill: `url(#${wellGradId})` })
     );
     textPos = { x: 100, y: 107 };
@@ -220,7 +260,14 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
       null,
       h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
       h("ellipse", { cx: 100, cy: 20, rx: 15, ry: 5, fill: dark }),
-      h("ellipse", { cx: 100, cy: 20, rx: 15, ry: 5, fill: "none", stroke: edge, strokeWidth: 1.5 })
+      h("ellipse", { cx: 100, cy: 20, rx: 15, ry: 5, fill: "none", stroke: edge, strokeWidth: 1.5 }),
+      h("path", {
+        d: "M87 16 Q100 12 113 16",
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1,
+        opacity: 0.6,
+      })
     );
     textPos = { x: 100, y: 118 };
   }
@@ -235,7 +282,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
       pattern && h("clipPath", { id: clipId }, clipShape),
       pattern && patternTile(patternId, pattern, patternTint)
     ),
-    h("ellipse", { cx: 100, cy: 198, rx: 60, ry: 10, fill: "#000", opacity: 0.15 }),
+    h("ellipse", { cx: 100, cy: 198, rx: 62, ry: 12, fill: `url(#${shadowGradId})` }),
     shapeElements,
     pattern &&
       h("rect", {
