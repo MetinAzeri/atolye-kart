@@ -1,5 +1,6 @@
 import React from "https://esm.sh/react@18";
 import { Link, NavLink } from "react-router-dom";
+import { useCart } from "../context/CartContext.js";
 
 const navItems = [
   { to: "/", label: "Ana Sayfa" },
@@ -13,6 +14,8 @@ function navLinkClassName({ isActive }) {
 }
 
 export function Navbar() {
+  const { totalCount } = useCart();
+
   return React.createElement(
     "nav",
     { className: "navbar" },
@@ -40,7 +43,7 @@ export function Navbar() {
       Link,
       { to: "/sepet", className: "navbar-cart" },
       "🛒",
-      React.createElement("span", { className: "navbar-cart-count" }, "0")
+      React.createElement("span", { className: "navbar-cart-count" }, totalCount)
     )
   );
 }

@@ -1,8 +1,8 @@
 import React from "https://esm.sh/react@18";
 import { ProductImage } from "./ProductImage.js";
-import { OrderForm } from "./OrderForm.js";
 import { StockNotifyForm } from "./StockNotifyForm.js";
 import { categories } from "../data/categories.js";
+import { useCart } from "../context/CartContext.js";
 
 const { useState } = React;
 
@@ -13,14 +13,11 @@ const stockLabels = {
 };
 
 export function ProductCard({ product }) {
-  const [openForm, setOpenForm] = useState(null);
+  const [showStockForm, setShowStockForm] = useState(false);
+  const { addItem } = useCart();
   const category = categories.find((item) => item.id === product.categoryId);
   const isOutOfStock = product.stockStatus === "out_of_stock";
   const cardClassName = isOutOfStock ? "product-card product-card--out-of-stock" : "product-card";
-
-  function toggleForm(formName) {
-    setOpenForm((current) => (current === formName ? null : formName));
-  }
 
   return React.createElement(
     "div",
@@ -48,7 +45,7 @@ export function ProductCard({ product }) {
         {
           type: "button",
           className: "card-button",
-          onClick: () => toggleForm("order"),
+          onClick: () => addItem(product),
           disabled: isOutOfStock,
         },
         "Sipariş Ver"
@@ -59,7 +56,7 @@ export function ProductCard({ product }) {
           {
             type: "button",
             className: "card-button card-button--secondary",
-            onClick: () => toggleForm("stock"),
+            onClick: () => setShowStockForm((current) => !current),
           },
           "Stok Bildirimi İste"
         )
@@ -70,7 +67,6 @@ export function ProductCard({ product }) {
         { className: "card-hint" },
         "Bu ürün stokta yok, stok bildirimi talep edebilirsiniz."
       ),
-    openForm === "order" && React.createElement(OrderForm, { product, onCancel: () => setOpenForm(null) }),
-    openForm === "stock" && React.createElement(StockNotifyForm, { product, onCancel: () => setOpenForm(null) })
+    showStockForm && React.createElement(StockNotifyForm, { product, onCancel: () => setShowStockForm(false) })
   );
 }

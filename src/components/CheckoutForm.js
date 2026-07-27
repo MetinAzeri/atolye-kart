@@ -1,14 +1,16 @@
 import React from "https://esm.sh/react@18";
 import { sendWebhookEvent } from "../lib/webhook.js";
+import { products } from "../data/products.js";
+import { useCart } from "../context/CartContext.js";
 
 const { useState } = React;
 
-export function OrderForm({ product, onCancel }) {
+export function CheckoutForm({ onCancel }) {
+  const { items, clearCart } = useCart();
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
-  const [quantity, setQuantity] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
 
@@ -24,16 +26,22 @@ export function OrderForm({ product, onCancel }) {
     setSubmitting(true);
     setFeedback(null);
     try {
-      await sendWebhookEvent({
-        event: "place_order",
-        name: name.trim(),
-        productId: product.id,
-        productName: product.name,
-        phone: phone.trim(),
-        email: email.trim(),
-        quantity: Number(quantity),
-        source: "atolyekart",
-      });
+      await Promise.all(
+        items.map((item) => {
+          const product = products.find((p) => p.id === item.productId);
+          return sendWebhookEvent({
+            event: "place_order",
+            name: name.trim(),
+            productId: item.productId,
+            productName: product ? product.name : item.productId,
+            phone: phone.trim(),
+            email: email.trim(),
+            quantity: item.quantity,
+            source: "atolyekart",
+          });
+        })
+      );
+      clearCart();
       setFeedback({ type: "success", text: "Siparişiniz alındı, teşekkürler!" });
     } catch (error) {
       setFeedback({ type: "error", text: "Bir hata oluştu, lütfen tekrar deneyin." });
@@ -84,15 +92,6 @@ export function OrderForm({ product, onCancel }) {
       placeholder: "E-posta",
       value: email,
       onChange: (event) => setEmail(event.target.value),
-      required: true,
-    }),
-    React.createElement("input", {
-      className: "card-form-input",
-      type: "number",
-      min: 1,
-      placeholder: "Adet",
-      value: quantity,
-      onChange: (event) => setQuantity(event.target.value),
       required: true,
     }),
     feedback &&
