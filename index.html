@@ -332,6 +332,71 @@
     grid-row: 1 / 3;
   }
 
+  .family-section {
+    margin-top: 56px;
+  }
+
+  .family-members {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .family-member-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+    padding: 28px 20px;
+    text-align: center;
+  }
+
+  .family-member-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 16px;
+  }
+
+  .family-member-name {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+
+  .family-member-quote {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+  }
+
+  .family-photo-wrap {
+    text-align: center;
+  }
+
+  .family-photo {
+    display: block;
+    width: 100%;
+    max-width: 600px;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(61, 43, 31, 0.08);
+    margin: 0 auto 24px;
+  }
+
+  .family-text {
+    max-width: 60ch;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+
   .products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -1100,6 +1165,14 @@
 
     .about-gallery img:first-child {
       grid-row: auto;
+    }
+
+    .family-members {
+      grid-template-columns: 1fr;
+    }
+
+    .family-photo {
+      height: 220px;
     }
 
     .hero-image {
