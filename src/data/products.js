@@ -7,7 +7,7 @@ export const products = [
     categoryId: "kase",
     stockStatus: "in_stock",
     stockQuantity: 6,
-    image: { type: "placeholder", color: "#c98a52" },
+    images: ["assets/products/nar-cicegi-kase-1.jpg", "assets/products/nar-cicegi-kase-2.jpg"],
   },
   {
     id: "zeytin-yesili-kase",
@@ -17,7 +17,7 @@ export const products = [
     categoryId: "kase",
     stockStatus: "in_stock",
     stockQuantity: 9,
-    image: { type: "placeholder", color: "#c98a52" },
+    images: ["assets/products/zeytin-yesili-kase-1.jpg", "assets/products/zeytin-yesili-kase-2.jpg"],
   },
   {
     id: "mini-atistirmalik-kasesi",
@@ -27,7 +27,7 @@ export const products = [
     categoryId: "kase",
     stockStatus: "low_stock",
     stockQuantity: 2,
-    image: { type: "placeholder", color: "#c98a52" },
+    images: ["assets/products/mini-atistirmalik-kasesi-1.jpg", "assets/products/mini-atistirmalik-kasesi-2.jpg"],
   },
   {
     id: "ay-isigi-vazo",
@@ -37,7 +37,7 @@ export const products = [
     categoryId: "vazo",
     stockStatus: "low_stock",
     stockQuantity: 2,
-    image: { type: "placeholder", color: "#a65d3f" },
+    images: ["assets/products/ay-isigi-vazo-1.jpg", "assets/products/ay-isigi-vazo-2.jpg"],
   },
   {
     id: "toprak-testi-vazo",
@@ -47,7 +47,7 @@ export const products = [
     categoryId: "vazo",
     stockStatus: "in_stock",
     stockQuantity: 4,
-    image: { type: "placeholder", color: "#a65d3f" },
+    images: ["assets/products/toprak-testi-vazo-1.jpg", "assets/products/toprak-testi-vazo-2.jpg"],
   },
   {
     id: "silindir-vazo",
@@ -56,7 +56,7 @@ export const products = [
     description: "Sade silindirik gövdesiyle bu vazo, tek dal bir çiçeği bile başlı başına bir sanat eserine dönüştürür.",
     categoryId: "vazo",
     stockStatus: "out_of_stock",
-    image: { type: "placeholder", color: "#a65d3f" },
+    images: ["assets/products/silindir-vazo-1.jpg", "assets/products/silindir-vazo-2.jpg"],
   },
   {
     id: "toprak-fincan-seti",
@@ -65,7 +65,7 @@ export const products = [
     description: "Sırsız dış yüzeyi elinize doğal bir doku hissettirirken, sırlı iç kısmıyla sabah kahvenize keyifli bir eşlik sunar.",
     categoryId: "fincan",
     stockStatus: "out_of_stock",
-    image: { type: "placeholder", color: "#8a6b4f" },
+    images: ["assets/products/toprak-fincan-seti-1.jpg", "assets/products/toprak-fincan-seti-2.jpg"],
   },
   {
     id: "turkuaz-fincan-seti",
@@ -75,7 +75,7 @@ export const products = [
     categoryId: "fincan",
     stockStatus: "in_stock",
     stockQuantity: 5,
-    image: { type: "placeholder", color: "#8a6b4f" },
+    images: ["assets/products/turkuaz-fincan-seti-1.jpg", "assets/products/turkuaz-fincan-seti-2.jpg"],
   },
   {
     id: "yaprak-desenli-tabak",
@@ -85,7 +85,7 @@ export const products = [
     categoryId: "tabak",
     stockStatus: "in_stock",
     stockQuantity: 7,
-    image: { type: "placeholder", color: "#b8763f" },
+    images: ["assets/products/yaprak-desenli-tabak-1.jpg", "assets/products/yaprak-desenli-tabak-2.jpg"],
   },
   {
     id: "kahvalti-tabagi",
@@ -95,7 +95,7 @@ export const products = [
     categoryId: "tabak",
     stockStatus: "in_stock",
     stockQuantity: 12,
-    image: { type: "placeholder", color: "#b8763f" },
+    images: ["assets/products/kahvalti-tabagi-1.jpg", "assets/products/kahvalti-tabagi-2.jpg"],
   },
   {
     id: "buyuk-servis-tabagi",
@@ -105,7 +105,7 @@ export const products = [
     categoryId: "tabak",
     stockStatus: "low_stock",
     stockQuantity: 1,
-    image: { type: "placeholder", color: "#b8763f" },
+    images: ["assets/products/buyuk-servis-tabagi-1.jpg", "assets/products/buyuk-servis-tabagi-2.jpg"],
   },
   {
     id: "mini-saksi",
@@ -115,7 +115,7 @@ export const products = [
     categoryId: "saksi",
     stockStatus: "in_stock",
     stockQuantity: 15,
-    image: { type: "placeholder", color: "#9c6644" },
+    images: ["assets/products/mini-saksi-1.jpg", "assets/products/mini-saksi-2.jpg"],
   },
   {
     id: "asma-saksi",
@@ -124,7 +124,7 @@ export const products = [
     description: "İp askılı bu orta boy saksı, duvarınıza ya da tavanınıza asarak yeşili havada özgürce sergilemenizi sağlar.",
     categoryId: "saksi",
     stockStatus: "out_of_stock",
-    image: { type: "placeholder", color: "#9c6644" },
+    images: ["assets/products/asma-saksi-1.jpg", "assets/products/asma-saksi-2.jpg"],
   },
   {
     id: "kus-biblo",
@@ -134,7 +134,7 @@ export const products = [
     categoryId: "biblo",
     stockStatus: "in_stock",
     stockQuantity: 8,
-    image: { type: "placeholder", color: "#d4a373" },
+    images: ["assets/products/kus-biblo-1.jpg", "assets/products/kus-biblo-2.jpg"],
   },
   {
     id: "ay-biblo",
@@ -144,7 +144,7 @@ export const products = [
     categoryId: "biblo",
     stockStatus: "low_stock",
     stockQuantity: 3,
-    image: { type: "placeholder", color: "#d4a373" },
+    images: ["assets/products/ay-biblo-1.jpg", "assets/products/ay-biblo-2.jpg"],
   },
   {
     id: "oval-sunum-tepsisi",
@@ -154,7 +154,7 @@ export const products = [
     categoryId: "tepsi",
     stockStatus: "in_stock",
     stockQuantity: 5,
-    image: { type: "placeholder", color: "#7f5539" },
+    images: ["assets/products/oval-sunum-tepsisi-1.jpg", "assets/products/oval-sunum-tepsisi-2.jpg"],
   },
   {
     id: "kare-tepsi",
@@ -164,7 +164,7 @@ export const products = [
     categoryId: "tepsi",
     stockStatus: "in_stock",
     stockQuantity: 6,
-    image: { type: "placeholder", color: "#7f5539" },
+    images: ["assets/products/kare-tepsi-1.jpg", "assets/products/kare-tepsi-2.jpg"],
   },
   {
     id: "bolmeli-atistirmalik-tepsisi",
@@ -173,7 +173,7 @@ export const products = [
     description: "Üç bölmesiyle bu tepsi, kuruyemiş ve meze çeşitlerinizi pratik ve şık bir sunuma dönüştürür.",
     categoryId: "tepsi",
     stockStatus: "out_of_stock",
-    image: { type: "placeholder", color: "#7f5539" },
+    images: ["assets/products/bolmeli-atistirmalik-tepsisi-1.jpg", "assets/products/bolmeli-atistirmalik-tepsisi-2.jpg"],
   },
   {
     id: "toprak-mumluk",
@@ -183,7 +183,7 @@ export const products = [
     categoryId: "mumluk",
     stockStatus: "in_stock",
     stockQuantity: 10,
-    image: { type: "placeholder", color: "#bc8a5f" },
+    images: ["assets/products/toprak-mumluk-1.jpg", "assets/products/toprak-mumluk-2.jpg"],
   },
   {
     id: "ikili-mumluk-seti",
@@ -193,6 +193,6 @@ export const products = [
     categoryId: "mumluk",
     stockStatus: "low_stock",
     stockQuantity: 2,
-    image: { type: "placeholder", color: "#bc8a5f" },
+    images: ["assets/products/ikili-mumluk-seti-1.jpg", "assets/products/ikili-mumluk-seti-2.jpg"],
   },
 ];

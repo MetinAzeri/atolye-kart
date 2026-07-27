@@ -1,16 +1,26 @@
 import React from "https://esm.sh/react@18";
 
-export function ProductImage({ image }) {
-  if (image.type === "photo") {
-    return React.createElement("img", {
-      className: "product-image",
-      src: image.url,
-      alt: "",
-    });
-  }
+const { useState } = React;
 
-  return React.createElement("div", {
-    className: "product-image",
-    style: { backgroundColor: image.color },
-  });
+export function ProductImage({ images }) {
+  const [index, setIndex] = useState(0);
+
+  return React.createElement(
+    "div",
+    {
+      className: "product-image",
+      onMouseEnter: () => setIndex(1),
+      onMouseLeave: () => setIndex(0),
+      onClick: () => setIndex((current) => (current === 0 ? 1 : 0)),
+    },
+    images.map((src, i) =>
+      React.createElement("img", {
+        key: src,
+        className: "product-image-photo",
+        style: { opacity: i === index ? 1 : 0 },
+        src,
+        alt: "",
+      })
+    )
+  );
 }

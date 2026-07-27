@@ -25,7 +25,7 @@ export function ProductCard({ product }) {
   return React.createElement(
     "div",
     { className: cardClassName },
-    React.createElement(ProductImage, { image: product.image }),
+    React.createElement(ProductImage, { images: product.images }),
     category &&
       React.createElement(
         "span",
