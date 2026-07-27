@@ -23,13 +23,57 @@ export function Navbar() {
   const { totalCount } = useCart();
   const { user, logout } = useAuth();
   const [showLoginForm, setShowLoginForm] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  function closeMenu() {
+    setMenuOpen(false);
+  }
+
+  const accountControl = user
+    ? React.createElement(
+        "div",
+        { className: "navbar-user" },
+        React.createElement("span", null, `Merhaba, ${user.username}`),
+        React.createElement(
+          "button",
+          { type: "button", className: "navbar-logout-button", onClick: logout },
+          "Çıkış Yap"
+        )
+      )
+    : React.createElement(
+        "button",
+        {
+          type: "button",
+          className: "navbar-login-button",
+          onClick: () => setShowLoginForm((current) => !current),
+        },
+        "👤 Giriş Yap"
+      );
+
+  const accountBlock = React.createElement(
+    "div",
+    { className: "navbar-account" },
+    accountControl,
+    !user &&
+      showLoginForm &&
+      React.createElement(
+        "div",
+        { className: "navbar-login-dropdown" },
+        React.createElement(LoginForm, {
+          onSuccess: () => {
+            setShowLoginForm(false);
+            closeMenu();
+          },
+        })
+      )
+  );
 
   return React.createElement(
     "nav",
     { className: "navbar" },
     React.createElement(
       Link,
-      { to: "/" },
+      { to: "/", onClick: closeMenu },
       React.createElement("img", {
         className: "navbar-logo",
         src: "assets/logo.png",
@@ -50,43 +94,44 @@ export function Navbar() {
     React.createElement(
       "div",
       { className: "navbar-right" },
-      React.createElement(
-        "div",
-        { className: "navbar-account" },
-        user
-          ? React.createElement(
-              "div",
-              { className: "navbar-user" },
-              React.createElement("span", null, `Merhaba, ${user.username}`),
-              React.createElement(
-                "button",
-                { type: "button", className: "navbar-logout-button", onClick: logout },
-                "Çıkış Yap"
-              )
-            )
-          : React.createElement(
-              "button",
-              {
-                type: "button",
-                className: "navbar-login-button",
-                onClick: () => setShowLoginForm((current) => !current),
-              },
-              "👤 Giriş Yap"
-            ),
-        !user &&
-          showLoginForm &&
-          React.createElement(
-            "div",
-            { className: "navbar-login-dropdown" },
-            React.createElement(LoginForm, { onSuccess: () => setShowLoginForm(false) })
-          )
-      ),
+      accountBlock,
       React.createElement(
         Link,
-        { to: "/sepet", className: "navbar-cart" },
+        { to: "/sepet", className: "navbar-cart", onClick: closeMenu },
         "🛒",
         React.createElement("span", { className: "navbar-cart-count" }, totalCount)
+      ),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          className: "navbar-toggle",
+          onClick: () => setMenuOpen((current) => !current),
+          "aria-label": "Menüyü aç/kapat",
+        },
+        "☰"
       )
-    )
+    ),
+    menuOpen &&
+      React.createElement(
+        "div",
+        { className: "navbar-mobile-menu" },
+        React.createElement(
+          "ul",
+          { className: "navbar-mobile-links" },
+          navItems.map((item) =>
+            React.createElement(
+              "li",
+              { key: item.to },
+              React.createElement(
+                NavLink,
+                { to: item.to, end: item.to === "/", className: navLinkClassName, onClick: closeMenu },
+                item.label
+              )
+            )
+          )
+        ),
+        accountBlock
+      )
   );
 }
