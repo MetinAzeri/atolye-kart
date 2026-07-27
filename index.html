@@ -4,6 +4,16 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kilhane Atölye — El Yapımı Seramik</title>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@18",
+    "react-dom": "https://esm.sh/react-dom@18",
+    "react-dom/client": "https://esm.sh/react-dom@18/client",
+    "react-router-dom": "https://esm.sh/react-router-dom@6?external=react,react-dom"
+  }
+}
+</script>
 <style>
   :root {
     --accent: #b5551f;
@@ -31,6 +41,87 @@
   .page {
     max-width: 960px;
     margin: 0 auto;
+  }
+
+  .navbar {
+    max-width: 960px;
+    margin: 0 auto 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .navbar-logo {
+    display: block;
+    height: 48px;
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .navbar-links {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+  }
+
+  .nav-link:hover {
+    color: var(--text-primary);
+  }
+
+  .nav-link--active {
+    color: var(--accent);
+  }
+
+  .navbar-cart {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-primary);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  .navbar-cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  @media (max-width: 720px) {
+    .navbar {
+      flex-wrap: wrap;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .navbar-links {
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   }
 
   .header {

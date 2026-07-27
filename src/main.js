@@ -1,33 +1,29 @@
 import React from "https://esm.sh/react@18";
 import { createRoot } from "https://esm.sh/react-dom@18/client";
-import { products } from "./data/products.js";
-import { ProductList } from "./components/ProductList.js";
-import { QrCode } from "./components/QrCode.js";
-import { AboutSection } from "./components/AboutSection.js";
-
-const REPO_URL = "https://github.com/MetinAzeri/atolye-kart";
+import { HashRouter, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar.js";
+import { HomePage } from "./pages/HomePage.js";
+import { ProductsPage } from "./pages/ProductsPage.js";
+import { AboutPage } from "./pages/AboutPage.js";
+import { CartPage } from "./pages/CartPage.js";
 
 function App() {
   return React.createElement(
-    "div",
-    { className: "page" },
+    HashRouter,
+    null,
+    React.createElement(Navbar),
     React.createElement(
       "div",
-      { className: "header" },
+      { className: "page" },
       React.createElement(
-        "div",
-        { className: "header-text" },
-        React.createElement("img", {
-          className: "workshop-logo",
-          src: "assets/logo.png",
-          alt: "Kilhane Atölye",
-        }),
-        React.createElement("p", { className: "tagline" }, '"Toprağın sabırla şekle dönüştüğü yer."')
-      ),
-      React.createElement(QrCode, { value: REPO_URL })
-    ),
-    React.createElement(AboutSection),
-    React.createElement(ProductList, { products })
+        Routes,
+        null,
+        React.createElement(Route, { path: "/", element: React.createElement(HomePage) }),
+        React.createElement(Route, { path: "/urunler", element: React.createElement(ProductsPage) }),
+        React.createElement(Route, { path: "/biz-kimiz", element: React.createElement(AboutPage) }),
+        React.createElement(Route, { path: "/sepet", element: React.createElement(CartPage) })
+      )
+    )
   );
 }
 
