@@ -47,7 +47,8 @@ export function Navbar() {
           className: "navbar-login-button",
           onClick: () => setShowLoginForm((current) => !current),
         },
-        "👤 Giriş Yap"
+        React.createElement("span", { "aria-hidden": "true" }, "👤"),
+        React.createElement("span", null, "Giriş Yap")
       );
 
   const accountBlock = React.createElement(

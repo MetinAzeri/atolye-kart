@@ -179,7 +179,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
     shapeElements = h(
       Fragment,
       null,
-      h("ellipse", { cx: 100, cy: 100, rx: 85, ry: 50, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
+      h("ellipse", { cx: 100, cy: 100, rx: 85, ry: 50, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2.5 }),
       h("ellipse", {
         cx: 100,
         cy: 99,
@@ -190,7 +190,16 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         strokeWidth: 1,
         opacity: 0.5,
       }),
-      h("ellipse", { cx: 100, cy: 103, rx: 60, ry: 35, fill: `url(#${wellGradId})` })
+      h("ellipse", {
+        cx: 100,
+        cy: 103,
+        rx: 60,
+        ry: 35,
+        fill: `url(#${wellGradId})`,
+        stroke: dark,
+        strokeWidth: 1,
+        opacity: 0.9,
+      })
     );
     textPos = { x: 100, y: 108 };
   } else if (type === "cup") {
@@ -200,7 +209,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
     shapeElements = h(
       Fragment,
       null,
-      h("path", { d: handlePath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 1.5 }),
+      h("path", { d: handlePath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
       h("path", {
         d: "M180 82 C186 105 184 138 140 156",
         fill: "none",
@@ -208,7 +217,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         strokeWidth: 1,
         opacity: 0.55,
       }),
-      h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
+      h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2.5 }),
       h("ellipse", { cx: 100, cy: 55, rx: 42, ry: 10, fill: dark }),
       h("ellipse", { cx: 100, cy: 55, rx: 42, ry: 10, fill: "none", stroke: edge, strokeWidth: 2 }),
       h("path", {
@@ -217,6 +226,16 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         stroke: light,
         strokeWidth: 1.2,
         opacity: 0.6,
+      }),
+      h("ellipse", {
+        cx: 100,
+        cy: 55,
+        rx: 34,
+        ry: 7,
+        fill: "none",
+        stroke: light,
+        strokeWidth: 1,
+        opacity: 0.35,
       })
     );
     textPos = { x: 100, y: 118 };
@@ -234,7 +253,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         ry: 30,
         fill: `url(#${gradId})`,
         stroke: edge,
-        strokeWidth: 2,
+        strokeWidth: 2.5,
       }),
       h("rect", {
         x: 26,
@@ -248,7 +267,18 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         strokeWidth: 1,
         opacity: 0.5,
       }),
-      h("rect", { x: 42, y: 72, width: 116, height: 61, rx: 18, ry: 18, fill: `url(#${wellGradId})` })
+      h("rect", {
+        x: 42,
+        y: 72,
+        width: 116,
+        height: 61,
+        rx: 18,
+        ry: 18,
+        fill: `url(#${wellGradId})`,
+        stroke: dark,
+        strokeWidth: 1,
+        opacity: 0.9,
+      })
     );
     textPos = { x: 100, y: 107 };
   } else {
@@ -258,7 +288,7 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
     shapeElements = h(
       Fragment,
       null,
-      h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2 }),
+      h("path", { d: bodyPath, fill: `url(#${gradId})`, stroke: edge, strokeWidth: 2.5 }),
       h("ellipse", { cx: 100, cy: 20, rx: 15, ry: 5, fill: dark }),
       h("ellipse", { cx: 100, cy: 20, rx: 15, ry: 5, fill: "none", stroke: edge, strokeWidth: 1.5 }),
       h("path", {
@@ -267,7 +297,9 @@ export function CeramicPreview({ type, color, pattern, text, size = 120 }) {
         stroke: light,
         strokeWidth: 1,
         opacity: 0.6,
-      })
+      }),
+      h("path", { d: "M78 60 Q73 110 81 155", fill: "none", stroke: light, strokeWidth: 1, opacity: 0.4 }),
+      h("path", { d: "M122 60 Q127 110 119 155", fill: "none", stroke: dark, strokeWidth: 1, opacity: 0.25 })
     );
     textPos = { x: 100, y: 118 };
   }

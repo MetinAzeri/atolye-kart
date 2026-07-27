@@ -33,7 +33,7 @@ export function FamilySection() {
         React.createElement(
           "div",
           { key: member.name, className: "family-member-card" },
-          React.createElement("span", { className: "family-member-icon" }, "❝"),
+          React.createElement("span", { className: "family-member-icon" }, member.name.charAt(0).toUpperCase()),
           React.createElement("p", { className: "family-member-name" }, member.name),
           React.createElement("p", { className: "family-member-quote" }, member.quote)
         )

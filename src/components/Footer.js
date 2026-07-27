@@ -8,6 +8,11 @@ export function Footer() {
     "footer",
     { className: "footer" },
     React.createElement(QrCode, { value: SITE_URL, label: "Mobilden Keşfedin" }),
-    React.createElement("p", { className: "footer-copyright" }, "© 2026 Kilhane Atölye · El yapımı seramik")
+    React.createElement(
+      "div",
+      { className: "footer-meta" },
+      React.createElement("p", { className: "footer-copyright" }, "© 2026 Kilhane Atölye · El yapımı seramik"),
+      React.createElement("p", { className: "footer-contact" }, "İletişim: info@kilhaneatolye.com")
+    )
   );
 }
