@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 import { QrCode } from "./QrCode.js";
 
 const SITE_URL = "https://metinazeri.github.io/atolye-kart/#/";

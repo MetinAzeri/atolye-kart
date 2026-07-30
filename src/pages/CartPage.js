@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 import { products } from "../data/products.js";
 import { useCart } from "../context/CartContext.js";
 import { CheckoutForm } from "../components/CheckoutForm.js";

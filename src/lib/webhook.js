@@ -1,4 +1,4 @@
-export const WEBHOOK_URL = "https://webhook.site/2fb30933-ce48-436a-af7f-730bae6b6f10";
+export const WEBHOOK_URL = import.meta.env.VITE_WEBHOOK_URL;
 
 // webhook.site yanıtlarında Access-Control-Allow-Origin header'ı yok, bu yüzden
 // normal "cors" modunda fetch her zaman "Failed to fetch" ile başarısız olur.

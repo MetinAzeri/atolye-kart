@@ -1,5 +1,5 @@
-import React from "https://esm.sh/react@18";
-import { createRoot } from "https://esm.sh/react-dom@18/client";
+import React from "react";
+import { createRoot } from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext.js";
 import { AuthProvider } from "./context/AuthContext.js";

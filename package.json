@@ -1,0 +1,32 @@
+{
+  "name": "atolye-kart",
+  "version": "1.0.0",
+  "description": "El yapımı seramik ürünleri sergileyen, tam bir e-ticaret deneyimi sunan çok sayfalı bir site — Ana Sayfa, Ürünler, Kendin Tasarla, Atölyeler, Biz Kimiz, Sepet ve Giriş/Üyelik arasında gezinme içerir. Ürünler sepete eklenip adetleri düzenlenebilir; sepetteki siparişler \"Siparişi Tamamla\" adımında müşteri bilgileriyle birlikte webhook üzerinden iletilir.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MetinAzeri/atolye-kart.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/MetinAzeri/atolye-kart/issues"
+  },
+  "homepage": "https://github.com/MetinAzeri/atolye-kart#readme",
+  "dependencies": {
+    "qrcode.react": "^3.2.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^6.30.4"
+  },
+  "devDependencies": {
+    "vite": "^8.2.0"
+  }
+}

@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 
 const ABOUT_TEXT =
   "Her şey bir avuç toprak ve sabırla başladı. Kilhane Atölye, elleriyle üretmenin değerine inanan birkaç ustanın bir araya gelmesiyle doğdu. Burada her kase, her vazo, saatlerce çamurun tekerlek üzerinde şekillenmesiyle, sırının özenle sürülmesiyle, fırının ateşiyle hayat buluyor. Bize göre bir seramik parçası sadece bir eşya değil — o günün ruh haliyle şekillenen, kusurları bile güzel olan bir emek hikâyesi. Seri üretimin aksine, burada aynı iki parça birbirinin tıpatıp aynısı olmaz; her biri kendine has bir karaktere sahiptir. Mutfağınıza, sofranıza koyduğunuz her parçayla, aslında bir zanaatkârın elinden geçmiş bir hikâyeyi de eve taşımış olursunuz.";

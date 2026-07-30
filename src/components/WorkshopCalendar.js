@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 
 const monthNames = [
   "Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran",

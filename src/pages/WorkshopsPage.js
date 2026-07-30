@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 import { WorkshopCalendar } from "../components/WorkshopCalendar.js";
 import { WorkshopDetail } from "../components/WorkshopDetail.js";
 import { workshops } from "../data/workshops.js";

@@ -1,4 +1,4 @@
-import React from "https://esm.sh/react@18";
+import React from "react";
 import { Link } from "react-router-dom";
 import { ProductList } from "../components/ProductList.js";
 import { CeramicArtSection } from "../components/CeramicArtSection.js";
