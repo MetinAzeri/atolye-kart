@@ -21,7 +21,7 @@ function navLinkClassName({ isActive }) {
 
 export function Navbar() {
   const { totalCount } = useCart();
-  const { user, logout } = useAuth();
+  const { user, logout, loading } = useAuth();
   const [showLoginForm, setShowLoginForm] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -29,7 +29,9 @@ export function Navbar() {
     setMenuOpen(false);
   }
 
-  const accountControl = user
+  const accountControl = loading
+    ? null
+    : user
     ? React.createElement(
         "div",
         { className: "navbar-user" },
