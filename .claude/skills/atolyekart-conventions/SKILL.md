@@ -74,7 +74,7 @@ Bileşenler veriyi doğrudan import eder; veri bileşenlerden bağımsız kalır
 ## Global State
 
 - **`src/context/CartContext.js`** (`useCart()`): sepet satırları (`{ productId, price, quantity, name, custom? }`), `addItem`/`incrementItem`/`decrementItem`/`clearCart`, `totalCount`/`totalPrice`/`toast`. Kalıcı değil (localStorage yok), sayfa yenilenince sıfırlanır.
-- **`src/context/AuthContext.js`** (`useAuth()`): **sahte üyelik** — `login(username)` şifreyi hiç kontrol etmeden `user`'ı set eder, gerçek doğrulama yoktur. Kalıcı değil. Giriş yapılmışsa `CheckoutForm.js` iletişim adımını atlayıp doğrudan ödemeye geçer (bkz. Webhook bölümü).
+- **`src/context/AuthContext.js`** (`useAuth()`): gerçek Supabase Auth (`src/supabaseClient.js`, e-posta+şifre) — `login(email, password)` / `signup(email, password, username)` async'tir, hatalı girişte throw eder. Session Supabase'in `persistSession` (localStorage) davranışıyla kalıcıdır. `loading` alanı ilk session kontrolü bitene kadar `true`. Giriş yapılmışsa `CheckoutForm.js` iletişim adımını atlayıp doğrudan ödemeye geçer (bkz. Webhook bölümü).
 
 ## Görsel Ekleme Akışı
 
@@ -149,7 +149,7 @@ Gönderim noktası: `src/components/RegistrationForm.js`, `WorkshopDetail.js`'te
 | Atölye verisi | `src/data/workshops.js`, kural bazlı türetilmiş (hardcode tarih yok) |
 | Routing | `HashRouter`, route'lar `src/main.js`'te (`/`, `/urunler`, `/kendin-tasarla`, `/atolyeler`, `/biz-kimiz`, `/sepet`) |
 | Sepet state | `CartContext` / `useCart()`, kalıcı değil |
-| Üyelik | `AuthContext` / `useAuth()`, **sahte** (gerçek doğrulama yok), kalıcı değil |
+| Üyelik | `AuthContext` / `useAuth()`, gerçek Supabase Auth (e-posta+şifre), session kalıcı |
 | Görsel ekleme | `assets/raw/` → kırp/standardize et (`.jpg`) → `assets/<konu>/` → raw'ı sil |
 | Webhook — Sipariş Ver | `event: "place_order"`, ödeme onayında (`CheckoutForm`); giriş yapılmışsa `phone`/`email` yok |
 | Webhook — Stok Bildirimi İste | `event: "request_stock_notification"` (`StockNotifyForm`) |
