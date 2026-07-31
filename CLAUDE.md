@@ -17,7 +17,7 @@ Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki 
 
 **Sepet state**: `src/context/CartContext.js` (React Context) — satır başına id/adet/fiyat/isim (özel tasarımlarda ek olarak `custom` açıklayıcısı) tutar; `addItem`/`incrementItem`/`decrementItem`/`clearCart` metodlarını ve `totalCount`/`totalPrice`/`toast` değerlerini sağlar. `useCart()` hook'uyla erişilir; kalıcılık (localStorage) yok. Sepete ekleme, `src/components/Toast.js` ile kısa süreli bir bildirim tetikler.
 
-**Sahte üyelik**: `src/context/AuthContext.js` (`useAuth()`) — `login(username)` şifreyi hiç kontrol etmeden `user`'ı set eder, gerçek doğrulama yoktur; kalıcı değildir. `src/components/LoginForm.js`, `Navbar.js` içinden (masaüstünde dropdown, mobilde hamburger panelinin içinde) açılır. Giriş yapılmışsa `CheckoutForm.js` iletişim adımını atlayıp doğrudan ödemeye geçer; webhook payload'unda `name` olarak `user.username` kullanılır, `phone`/`email` alanları hiç gönderilmez.
+**Üyelik**: `src/context/AuthContext.js` (`useAuth()`) gerçek Supabase Auth'u sarar (`src/supabaseClient.js`, e-posta+şifre ile `supabase.auth`). `login(email, password)` ve `signup(email, password, username)` async'tir ve hatalı girişte throw eder — `LoginForm.js` bunu yakalayıp Türkçeleştirilmiş bir hata mesajı gösterir. Session Supabase'in kendi `persistSession` (localStorage) davranışıyla kalıcıdır — sayfa yenilenince kullanıcı giriş yapılmış kalır. `useAuth()` ayrıca `loading` alanı sağlar (ilk session kontrolü tamamlanana kadar `true` — `Navbar.js` bunu flicker'ı önlemek için kullanır). `LoginForm.js`, `Navbar.js` içinden (masaüstünde dropdown, mobilde hamburger panelinin içinde) açılır. Giriş yapılmışsa `CheckoutForm.js` iletişim adımını atlayıp doğrudan ödemeye geçer; webhook payload'unda `name` olarak `user.username` kullanılır, `phone`/`email` alanları hiç gönderilmez.
 
 **Kendin Tasarla akışı**: `DesignPage.js`, 4 adımlı bir stepper yönetir (Ürün → Renk → Desen → Yazı; `currentStep` + seçim state'i component-local). Seçilen her kombinasyon `src/components/CeramicPreview.js`'e prop olarak geçirilir — bu bileşen `type`'a göre (tabak/bardak/tepsi/vazo) gradyanlı/gölgeli, dolgu tabanlı bir SVG çizer; desen varsa `clipPath` ile forma klipslenir, rengi `src/lib/color.js`'teki `shadeColor`/`getLuminance` ile seçilen renkten otomatik hesaplanır. "Sepete Ekle"de sentetik bir ürün nesnesi (`id`, `name: "Özel Tasarım — …"`, sabit `price`, `custom` açıklayıcısı) `addItem`'a geçirilir; `CartPage` bu satırlarda küçük bir `CeramicPreview` gösterir.
 
@@ -33,7 +33,7 @@ Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki 
 ## Ana Bileşenler
 
 - `Navbar` (masaüstü yatay menü + mobil hamburger paneli), `Footer` — site geneli çerçeve
-- `LoginForm` — sahte giriş formu (`AuthContext`'e bağlı)
+- `LoginForm` — giriş/kayıt formu (`AuthContext`'e, dolayısıyla Supabase Auth'a bağlı)
 - `ProductCard`, `ProductImage`, `ProductList` — katalog ürün gösterimi
 - `AboutSection`, `FamilySection`, `CeramicArtSection` — Biz Kimiz / Ana Sayfa anlatı bölümleri
 - `CeramicPreview`, `DesignPage` — Kendin Tasarla konfigüratörü ve SVG önizleme
