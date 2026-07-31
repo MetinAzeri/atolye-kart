@@ -12,6 +12,7 @@ import { AboutPage } from "./pages/AboutPage.js";
 import { CartPage } from "./pages/CartPage.js";
 import { DesignPage } from "./pages/DesignPage.js";
 import { WorkshopsPage } from "./pages/WorkshopsPage.js";
+import { PrivacyPolicy } from "./pages/PrivacyPolicy.js";
 
 function App() {
   return React.createElement(
@@ -36,7 +37,8 @@ function App() {
             React.createElement(Route, { path: "/biz-kimiz", element: React.createElement(AboutPage) }),
             React.createElement(Route, { path: "/sepet", element: React.createElement(CartPage) }),
             React.createElement(Route, { path: "/kendin-tasarla", element: React.createElement(DesignPage) }),
-            React.createElement(Route, { path: "/atolyeler", element: React.createElement(WorkshopsPage) })
+            React.createElement(Route, { path: "/atolyeler", element: React.createElement(WorkshopsPage) }),
+            React.createElement(Route, { path: "/privacy-policy", element: React.createElement(PrivacyPolicy) })
           )
         ),
         React.createElement(Footer)

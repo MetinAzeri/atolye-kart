@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { sendWebhookEvent } from "../lib/webhook.js";
 
 const { useState } = React;
@@ -6,11 +7,19 @@ const { useState } = React;
 export function StockNotifyForm({ product, onCancel }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
 
   async function handleSubmit(event) {
     event.preventDefault();
+
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    setConsentError(false);
     setSubmitting(true);
     setFeedback(null);
     try {
@@ -60,6 +69,31 @@ export function StockNotifyForm({ product, onCancel }) {
       onChange: (event) => setEmail(event.target.value),
       required: true,
     }),
+    React.createElement(
+      "label",
+      { className: "card-form-checkbox" },
+      React.createElement("input", {
+        type: "checkbox",
+        checked: consent,
+        onChange: (event) => {
+          setConsent(event.target.checked);
+          setConsentError(false);
+        },
+      }),
+      React.createElement(
+        "span",
+        null,
+        "Kişisel verilerimin işlenmesine ve ",
+        React.createElement(Link, { to: "/privacy-policy" }, "Gizlilik Politikası"),
+        "'nda belirtilen amaçlarla kullanılmasına izin veriyorum."
+      )
+    ),
+    consentError &&
+      React.createElement(
+        "p",
+        { className: "card-form-message card-form-message--error" },
+        "Devam etmek için KVKK/gizlilik rızasını onaylamanız gerekiyor."
+      ),
     feedback &&
       feedback.type === "error" &&
       React.createElement("p", { className: "card-form-message card-form-message--error" }, feedback.text),

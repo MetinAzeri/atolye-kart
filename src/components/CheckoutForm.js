@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { sendWebhookEvent } from "../lib/webhook.js";
 import { useCart } from "../context/CartContext.js";
 import { useAuth } from "../context/AuthContext.js";
@@ -14,6 +15,8 @@ export function CheckoutForm({ onCancel }) {
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
+  const [consent, setConsent] = useState(false);
+  const [consentError, setConsentError] = useState(false);
   const [feedback, setFeedback] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -25,6 +28,13 @@ export function CheckoutForm({ onCancel }) {
       return;
     }
     setPhoneError(false);
+
+    if (!consent) {
+      setConsentError(true);
+      return;
+    }
+    setConsentError(false);
+
     setSubmitting(true);
     setStep("payment");
   }
@@ -99,6 +109,31 @@ export function CheckoutForm({ onCancel }) {
       onChange: (event) => setEmail(event.target.value),
       required: true,
     }),
+    React.createElement(
+      "label",
+      { className: "card-form-checkbox" },
+      React.createElement("input", {
+        type: "checkbox",
+        checked: consent,
+        onChange: (event) => {
+          setConsent(event.target.checked);
+          setConsentError(false);
+        },
+      }),
+      React.createElement(
+        "span",
+        null,
+        "Kişisel verilerimin işlenmesine ve ",
+        React.createElement(Link, { to: "/privacy-policy" }, "Gizlilik Politikası"),
+        "'nda belirtilen amaçlarla kullanılmasına izin veriyorum."
+      )
+    ),
+    consentError &&
+      React.createElement(
+        "p",
+        { className: "card-form-message card-form-message--error" },
+        "Devam etmek için KVKK/gizlilik rızasını onaylamanız gerekiyor."
+      ),
     React.createElement(
       "div",
       { className: "card-form-actions" },
