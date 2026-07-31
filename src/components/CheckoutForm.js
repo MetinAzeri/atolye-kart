@@ -15,6 +15,7 @@ export function CheckoutForm({ onCancel }) {
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
   const [feedback, setFeedback] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   function handleContactSubmit(event) {
     event.preventDefault();
@@ -24,6 +25,7 @@ export function CheckoutForm({ onCancel }) {
       return;
     }
     setPhoneError(false);
+    setSubmitting(true);
     setStep("payment");
   }
 
@@ -100,10 +102,19 @@ export function CheckoutForm({ onCancel }) {
     React.createElement(
       "div",
       { className: "card-form-actions" },
-      React.createElement("button", { type: "submit", className: "card-button" }, "Devam"),
       React.createElement(
         "button",
-        { type: "button", className: "card-button card-button--secondary", onClick: onCancel },
+        { type: "submit", className: "card-button", disabled: submitting },
+        "Devam"
+      ),
+      React.createElement(
+        "button",
+        {
+          type: "button",
+          className: "card-button card-button--secondary",
+          onClick: onCancel,
+          disabled: submitting,
+        },
         "Vazgeç"
       )
     )
