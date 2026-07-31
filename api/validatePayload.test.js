@@ -165,6 +165,24 @@ import { validatePayload } from "./validatePayload.js";
   assert.strictEqual(result.valid, false);
 }
 
+// prototype-pollution: Object.prototype'dan miras alınan event adı çökmemeli
+{
+  const result = validatePayload({ event: "constructor" });
+  assert.strictEqual(result.valid, false);
+}
+
+// email: 254 karakteri aşan e-posta reddedilmeli
+{
+  const result = validatePayload({
+    event: "request_stock_notification",
+    name: "Ayşe Yılmaz",
+    productId: "silindir-vazo",
+    productName: "Silindir Vazo",
+    email: "a".repeat(250) + "@x.co",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
 // body obje değil
 {
   const result = validatePayload(null);

@@ -30,7 +30,7 @@ const FIELD_VALIDATORS = {
   productId: (value) => isNonEmptyString(value, 100),
   productName: (value) => isNonEmptyString(value, 200),
   phone: (value) => typeof value === "string" && PHONE_PATTERN.test(value),
-  email: (value) => typeof value === "string" && EMAIL_PATTERN.test(value),
+  email: (value) => isNonEmptyString(value, 254) && EMAIL_PATTERN.test(value),
   quantity: (value) => isValidInteger(value, 1, 20),
   participantCount: (value) => isValidInteger(value, 1, 20),
   workshopDate: (value) => typeof value === "string" && DATE_PATTERN.test(value),
@@ -42,7 +42,7 @@ export function validatePayload(body) {
     return { valid: false, error: "Payload bir obje olmalı" };
   }
 
-  const schema = SCHEMAS[body.event];
+  const schema = Object.hasOwn(SCHEMAS, body.event) ? SCHEMAS[body.event] : undefined;
   if (!schema) {
     return { valid: false, error: "Bilinmeyen event tipi" };
   }
