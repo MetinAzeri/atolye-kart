@@ -39,3 +39,12 @@ Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki 
 - `CeramicPreview`, `DesignPage` — Kendin Tasarla konfigüratörü ve SVG önizleme
 - `WorkshopCalendar`, `WorkshopDetail`, `RegistrationForm` — Atölyeler takvimi ve kayıt akışı
 - `CheckoutForm`, `PaymentForm`, `StockNotifyForm`, `Toast`, `QrCode` — sepet/ödeme/bildirim yardımcı bileşenleri
+
+## Bilinen Bağımlılık Zafiyetleri (kabul edilmiş risk)
+
+`npm audit`, `react-router-dom@^6.30.4`'ün bağımlılığı `react-router` üzerinden 2 orta (moderate) seviye zafiyet raporluyor. Düzeltme v7'ye major upgrade gerektiriyor; bilinçli olarak yapılmadı (2026-08-01). Gerekçe, tekrar audit çalıştırıldığında hatırlanması için:
+
+- **Open redirect via backslash in `<Link>`/`useNavigate`**: Sömürülmesi, kullanıcı girdisinden gelen bir `to`/navigate hedefi gerektirir. Projede tüm route hedefleri (`Navbar`, sayfa geçişleri, `Link to="/privacy-policy"` vb.) kod içinde sabit string'lerdir — kullanıcıdan alınan hiçbir değer `to`/`navigate()` argümanı olarak kullanılmaz.
+- **Arbitrary Constructor Injection via `deserializeErrors()` (SSR hydration)**: Proje build aracı/SSR kullanmıyor (native ES modules, `HashRouter`, statik host) — bu zafiyet yalnızca server-side rendering hydration akışında tetiklenir, burada hiç yok.
+
+Major upgrade ileride gündeme gelirse (örn. SSR'a geçiş veya kullanıcı girdili navigasyon eklenirse) bu gerekçe geçersiz olur, o zaman yeniden değerlendirilmeli.
