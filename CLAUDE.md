@@ -48,3 +48,24 @@ Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki 
 - **Arbitrary Constructor Injection via `deserializeErrors()` (SSR hydration)**: Proje build aracı/SSR kullanmıyor (native ES modules, `HashRouter`, statik host) — bu zafiyet yalnızca server-side rendering hydration akışında tetiklenir, burada hiç yok.
 
 Major upgrade ileride gündeme gelirse (örn. SSR'a geçiş veya kullanıcı girdili navigasyon eklenirse) bu gerekçe geçersiz olur, o zaman yeniden değerlendirilmeli.
+
+## Token disiplini
+
+- Mekanik işlerde (dosya düzenleme, tek component çevirisi, config değişikliği) subagent/Task kullanma, işi doğrudan yap.
+- Tam kod tabanı taraması sadece kullanıcı açıkça istediğinde yapılsın.
+- Faz/görev sonlarında sadece yapılan değişiklikleri özetle, dosyaları baştan okuma.
+- Yeni bağımlılık eklemeden önce mevcut paketlerle çözülüp çözülemeyeceğini kontrol et; gerekiyorsa kullanıcıya sor.
+- Uzun oturumlarda faz sonlarında `/compact` önerisini hatırlat.
+
+### Plugin konfigürasyonu
+
+Oturum başında iş türüne göre şu pluginler açık/kapalı olmalı:
+
+| İş türü | Açık | Kapalı |
+|---|---|---|
+| Kod düzenleme / component çevirisi / config | ponytail, security-guidance | superpowers, claude-mem, ralph-loop |
+| Sıfırdan mimari, brainstorming, büyük refactor | ponytail, security-guidance, superpowers | claude-mem, ralph-loop |
+| Çok sayıda kısa oturumlu yeni proje | claude-mem | — |
+| Web/HTML-CSS tasarım işi | frontend-design (React Native'de işe yaramaz) | — |
+
+Not: Plugin değişikliğini Claude yapamaz — kullanıcıya `/plugin` → `Installed` → `Space` → `Esc` → `/reload-plugins` adımlarını hatırlatmalı.
