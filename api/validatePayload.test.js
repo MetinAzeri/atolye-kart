@@ -80,6 +80,66 @@ import { validatePayload } from "./validatePayload.js";
   assert.strictEqual(result.valid, false);
 }
 
+// place_order: katalogda olmayan productId reddedilmeli
+{
+  const result = validatePayload({
+    event: "place_order",
+    name: "Ayşe Yılmaz",
+    productId: "olmayan-urun-id",
+    productName: "Uydurma Ürün",
+    quantity: 1,
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// place_order: Kendin Tasarla custom-<timestamp> id'si kabul edilmeli
+{
+  const result = validatePayload({
+    event: "place_order",
+    name: "Ayşe Yılmaz",
+    productId: "custom-1735689600000",
+    productName: "Özel Tasarım — Tabak",
+    quantity: 1,
+  });
+  assert.strictEqual(result.valid, true);
+}
+
+// place_order: custom- ön ekli ama sayısal olmayan id reddedilmeli
+{
+  const result = validatePayload({
+    event: "place_order",
+    name: "Ayşe Yılmaz",
+    productId: "custom-abc",
+    productName: "Özel Tasarım — Tabak",
+    quantity: 1,
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// request_stock_notification: katalogda olmayan productId reddedilmeli
+{
+  const result = validatePayload({
+    event: "request_stock_notification",
+    name: "Ayşe Yılmaz",
+    productId: "olmayan-urun-id",
+    productName: "Uydurma Ürün",
+    email: "ayse@example.com",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// request_stock_notification: custom- id'si burada geçerli sayılmamalı (bu event katalog ürünlerine özel)
+{
+  const result = validatePayload({
+    event: "request_stock_notification",
+    name: "Ayşe Yılmaz",
+    productId: "custom-1735689600000",
+    productName: "Özel Tasarım — Tabak",
+    email: "ayse@example.com",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
 // request_stock_notification: geçerli
 {
   const result = validatePayload({

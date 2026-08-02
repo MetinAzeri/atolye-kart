@@ -1,6 +1,15 @@
+import { VALID_PRODUCT_IDS } from "./lib/validProductIds.js";
+
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[0-9]{10,11}$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
+const CUSTOM_PRODUCT_ID_PATTERN = /^custom-\d+$/;
+
+// place_order'da Kendin Tasarla ürünleri katalogda değil, custom-<timestamp> id'siyle gelir.
+function isKnownProductId(productId, event) {
+  if (VALID_PRODUCT_IDS.has(productId)) return true;
+  return event === "place_order" && CUSTOM_PRODUCT_ID_PATTERN.test(productId);
+}
 
 const SCHEMAS = {
   place_order: {
@@ -66,6 +75,13 @@ export function validatePayload(body) {
     if (body[field] !== undefined && !FIELD_VALIDATORS[field](body[field])) {
       return { valid: false, error: `Geçersiz alan: ${field}` };
     }
+  }
+
+  if (
+    (body.event === "place_order" || body.event === "request_stock_notification") &&
+    !isKnownProductId(body.productId, body.event)
+  ) {
+    return { valid: false, error: "Bilinmeyen ürün" };
   }
 
   const payload = { event: body.event, source: "atolyekart" };
