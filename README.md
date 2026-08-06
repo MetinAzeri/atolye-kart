@@ -10,4 +10,6 @@ El yapımı seramik ürünleri sergileyen, tam bir e-ticaret deneyimi sunan çok
 
 **Sepet / Ödeme**: sepet tamamlandığında bir ödeme ekranı simülasyonu gösterilir (kart numarası, isim, son kullanma tarihi, CVV) — bu tamamen kozmetik bir demo akışıdır, gerçek bir ödeme sistemine bağlı değildir ve gerçek ödeme alınmaz.
 
+**Chat Widget**: sağ altta açılan bir sohbet paneli — kullanıcının mesajı `api/chat.js` üzerinden bir n8n webhook'una iletilir ve dönen cevap sohbete eklenir. Çalışması için `N8N_CHAT_WEBHOOK_URL` ortam değişkeninin (bkz. `.env.example`) tanımlı olması gerekir.
+
 🔗 Canlı site: https://metinazeri.github.io/atolye-kart/

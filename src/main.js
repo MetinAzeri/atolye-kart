@@ -6,6 +6,7 @@ import { AuthProvider } from "./context/AuthContext.js";
 import { Navbar } from "./components/Navbar.js";
 import { Toast } from "./components/Toast.js";
 import { Footer } from "./components/Footer.js";
+import { ChatWidget } from "./components/ChatWidget.js";
 import { HomePage } from "./pages/HomePage.js";
 import { ProductsPage } from "./pages/ProductsPage.js";
 import { AboutPage } from "./pages/AboutPage.js";
@@ -41,7 +42,8 @@ function App() {
             React.createElement(Route, { path: "/privacy-policy", element: React.createElement(PrivacyPolicy) })
           )
         ),
-        React.createElement(Footer)
+        React.createElement(Footer),
+        React.createElement(ChatWidget)
       )
     )
   );
