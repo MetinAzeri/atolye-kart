@@ -8,6 +8,8 @@ export default async function handler(req, res) {
   }
 
   const isPlaceOrder = req.body?.event === "place_order";
+  // ponytail: place_order sepetteki her satır için ayrı istek atıyor (bkz. CLAUDE.md),
+  // çok satırlı sepet limite takılmasın diye muaf — sepet satır sayısı büyürse limit gerekebilir.
   if (!isPlaceOrder && isRateLimited(getClientIp(req))) {
     return res.status(429).json({ error: "Çok fazla istek, lütfen biraz bekleyin." });
   }
