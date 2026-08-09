@@ -11,6 +11,7 @@ function extractReply(data) {
 
 export function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
+  const [sessionId] = useState(() => crypto.randomUUID());
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -35,7 +36,7 @@ export function ChatWidget() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ chatInput: trimmed }),
+        body: JSON.stringify({ chatInput: trimmed, sessionId }),
       });
       const data = await response.json().catch(() => ({}));
       const replyText = response.ok ? extractReply(data) : "Bir hata oluştu, lütfen tekrar deneyin.";

@@ -24,7 +24,7 @@ export default async function handler(req, res) {
     const response = await fetch(process.env.N8N_CHAT_WEBHOOK_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ chatInput: req.body.chatInput }),
+      body: JSON.stringify({ chatInput: req.body.chatInput, sessionId: req.body.sessionId }),
     });
     const data = await response.json().catch(() => ({}));
     res.status(response.status).json(data);
