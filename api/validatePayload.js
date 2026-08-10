@@ -22,7 +22,7 @@ const SCHEMAS = {
     optional: [],
   },
   workshop_registration: {
-    required: ["name", "phone", "email", "participantCount", "workshopDate", "workshopType"],
+    required: ["name", "phone", "email", "participantCount", "participants", "workshopDate", "workshopType"],
     optional: [],
   },
 };
@@ -35,6 +35,14 @@ function isValidInteger(value, min, max) {
   return Number.isInteger(value) && value >= min && value <= max;
 }
 
+function isValidParticipants(value) {
+  return (
+    Array.isArray(value) &&
+    value.length > 0 &&
+    value.every((p) => p && typeof p === "object" && isNonEmptyString(p.name, 100) && isValidInteger(p.age, 1, 99))
+  );
+}
+
 const FIELD_VALIDATORS = {
   name: (value) => isNonEmptyString(value, 100),
   productId: (value) => isNonEmptyString(value, 100),
@@ -43,6 +51,7 @@ const FIELD_VALIDATORS = {
   email: (value) => isNonEmptyString(value, 254) && EMAIL_PATTERN.test(value),
   quantity: (value) => isValidInteger(value, 1, 20),
   participantCount: (value) => isValidInteger(value, 1, 20),
+  participants: isValidParticipants,
   workshopDate: (value) => typeof value === "string" && DATE_PATTERN.test(value),
   workshopType: (value) => isNonEmptyString(value, 50),
 };
@@ -93,11 +102,17 @@ export function validatePayload(body) {
     if (body.participantCount > capacity) {
       return { valid: false, error: "Katılımcı sayısı kapasiteyi aşıyor" };
     }
+    if (body.participants.length !== body.participantCount) {
+      return { valid: false, error: "Katılımcı listesi katılımcı sayısıyla eşleşmiyor" };
+    }
   }
 
   const payload = { event: body.event, source: "atolyekart" };
   for (const field of [...schema.required, ...schema.optional]) {
-    if (body[field] !== undefined) {
+    if (body[field] === undefined) continue;
+    if (field === "participants") {
+      payload.participants = body.participants.map((p) => ({ name: p.name.trim(), age: p.age }));
+    } else {
       payload[field] = typeof body[field] === "string" ? body[field].trim() : body[field];
     }
   }

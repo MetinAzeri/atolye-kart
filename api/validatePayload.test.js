@@ -171,10 +171,34 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 2,
+    participants: [
+      { name: "Ali Yılmaz", age: 8 },
+      { name: "Ayşe Yılmaz", age: 35 },
+    ],
     workshopDate: "2026-08-04",
     workshopType: "Baba-Çocuk",
   });
   assert.strictEqual(result.valid, true);
+  assert.deepStrictEqual(result.payload.participants, [
+    { name: "Ali Yılmaz", age: 8 },
+    { name: "Ayşe Yılmaz", age: 35 },
+  ]);
+}
+
+// workshop_registration: participants'taki isim trim'lenmeli
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 1,
+    participants: [{ name: "  Ali Yılmaz  ", age: 8 }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, true);
+  assert.strictEqual(result.payload.participants[0].name, "Ali Yılmaz");
 }
 
 // workshop_registration: geçersiz telefon formatı (+90 önekli)
@@ -185,6 +209,10 @@ import { validatePayload } from "./validatePayload.js";
     phone: "+905321234567",
     email: "ayse@example.com",
     participantCount: 2,
+    participants: [
+      { name: "Ali Yılmaz", age: 8 },
+      { name: "Ayşe Yılmaz", age: 35 },
+    ],
     workshopDate: "2026-08-04",
     workshopType: "Baba-Çocuk",
   });
@@ -199,6 +227,10 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 2,
+    participants: [
+      { name: "Ali Yılmaz", age: 8 },
+      { name: "Ayşe Yılmaz", age: 35 },
+    ],
     workshopDate: "04-08-2026",
     workshopType: "Baba-Çocuk",
   });
@@ -213,6 +245,7 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 50,
+    participants: Array.from({ length: 50 }, () => ({ name: "Katılımcı", age: 20 })),
     workshopDate: "2026-08-04",
     workshopType: "Baba-Çocuk",
   });
@@ -227,6 +260,7 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 7,
+    participants: Array.from({ length: 7 }, () => ({ name: "Katılımcı", age: 20 })),
     workshopDate: "2026-08-04",
     workshopType: "Baba-Çocuk",
   });
@@ -241,6 +275,7 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 6,
+    participants: Array.from({ length: 6 }, () => ({ name: "Katılımcı", age: 20 })),
     workshopDate: "2026-08-04",
     workshopType: "Baba-Çocuk",
   });
@@ -255,8 +290,101 @@ import { validatePayload } from "./validatePayload.js";
     phone: "5321234567",
     email: "ayse@example.com",
     participantCount: 2,
+    participants: [
+      { name: "Ali Yılmaz", age: 8 },
+      { name: "Ayşe Yılmaz", age: 35 },
+    ],
     workshopDate: "2026-08-04",
     workshopType: "Uydurma Tür",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: participants eksik (zorunlu alan)
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 2,
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: participants.length participantCount ile eşleşmiyor
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 2,
+    participants: [{ name: "Ali Yılmaz", age: 8 }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: katılımcı ismi boş
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 1,
+    participants: [{ name: "  ", age: 8 }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: katılımcı yaşı aralık dışı (0)
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 1,
+    participants: [{ name: "Ali Yılmaz", age: 0 }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: katılımcı yaşı aralık dışı (100)
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 1,
+    participants: [{ name: "Ali Yılmaz", age: 100 }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: katılımcı yaşı tam sayı değil
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 1,
+    participants: [{ name: "Ali Yılmaz", age: "otuz" }],
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
   });
   assert.strictEqual(result.valid, false);
 }

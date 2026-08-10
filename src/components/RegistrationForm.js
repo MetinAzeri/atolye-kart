@@ -12,10 +12,22 @@ export function RegistrationForm({ workshop, onCancel }) {
   const [email, setEmail] = useState("");
   const [participantCount, setParticipantCount] = useState("");
   const [participantCountError, setParticipantCountError] = useState(false);
+  const [participants, setParticipants] = useState([]);
+  const [participantsError, setParticipantsError] = useState(false);
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [feedback, setFeedback] = useState(null);
+
+  function updateParticipant(index, field, value) {
+    setParticipants((prev) => prev.map((p, i) => (i === index ? { ...p, [field]: value } : p)));
+    setParticipantsError(false);
+  }
+
+  function isValidAge(age) {
+    const n = Number(age);
+    return Number.isInteger(n) && n >= 1 && n <= 99;
+  }
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -33,6 +45,15 @@ export function RegistrationForm({ workshop, onCancel }) {
     }
     setParticipantCountError(false);
 
+    const participantsValid =
+      participants.length === count &&
+      participants.every((p) => p.name.trim().length > 0 && isValidAge(p.age));
+    if (!participantsValid) {
+      setParticipantsError(true);
+      return;
+    }
+    setParticipantsError(false);
+
     if (!consent) {
       setConsentError(true);
       return;
@@ -48,6 +69,7 @@ export function RegistrationForm({ workshop, onCancel }) {
         phone: phone.trim(),
         email: email.trim(),
         participantCount: Number(participantCount),
+        participants: participants.map((p) => ({ name: p.name.trim(), age: Number(p.age) })),
         workshopDate: workshop.date,
         workshopType: workshop.label,
         source: "atolyekart",
@@ -112,8 +134,18 @@ export function RegistrationForm({ workshop, onCancel }) {
       placeholder: "Katılımcı Sayısı",
       value: participantCount,
       onChange: (event) => {
-        setParticipantCount(event.target.value);
+        const raw = event.target.value;
+        setParticipantCount(raw);
         setParticipantCountError(false);
+        const parsed = Number(raw);
+        if (Number.isInteger(parsed) && parsed >= 0) {
+          const n = Math.min(parsed, capacity);
+          setParticipants((prev) => {
+            const next = prev.slice(0, n);
+            while (next.length < n) next.push({ name: "", age: "" });
+            return next;
+          });
+        }
       },
       required: true,
     }),
@@ -122,6 +154,39 @@ export function RegistrationForm({ workshop, onCancel }) {
         "p",
         { className: "card-form-message card-form-message--error" },
         `Bu atölye en fazla ${capacity} kişiliktir.`
+      ),
+    ...participants.map((p, i) =>
+      React.createElement(
+        "div",
+        { key: i },
+        React.createElement("p", { className: "card-form-participant-label" }, `Katılımcı ${i + 1}`),
+        React.createElement(
+          "div",
+          { className: "card-form-row" },
+          React.createElement("input", {
+            className: "card-form-input",
+            type: "text",
+            placeholder: "İsim",
+            value: p.name,
+            onChange: (event) => updateParticipant(i, "name", event.target.value),
+          }),
+          React.createElement("input", {
+            className: "card-form-input",
+            type: "number",
+            min: 1,
+            max: 99,
+            placeholder: "Yaş",
+            value: p.age,
+            onChange: (event) => updateParticipant(i, "age", event.target.value),
+          })
+        )
+      )
+    ),
+    participantsError &&
+      React.createElement(
+        "p",
+        { className: "card-form-message card-form-message--error" },
+        "Her katılımcının adı ve 1-99 arasında bir yaşı girilmelidir."
       ),
     React.createElement(
       "label",
