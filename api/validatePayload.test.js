@@ -219,6 +219,48 @@ import { validatePayload } from "./validatePayload.js";
   assert.strictEqual(result.valid, false);
 }
 
+// workshop_registration: participantCount atölye kapasitesini aşıyor (Baba-Çocuk: 6)
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 7,
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// workshop_registration: participantCount tam kapasitede geçerli olmalı
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 6,
+    workshopDate: "2026-08-04",
+    workshopType: "Baba-Çocuk",
+  });
+  assert.strictEqual(result.valid, true);
+}
+
+// workshop_registration: bilinmeyen atölye türü reddedilmeli
+{
+  const result = validatePayload({
+    event: "workshop_registration",
+    name: "Ayşe Yılmaz",
+    phone: "5321234567",
+    email: "ayse@example.com",
+    participantCount: 2,
+    workshopDate: "2026-08-04",
+    workshopType: "Uydurma Tür",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
 // bilinmeyen event tipi
 {
   const result = validatePayload({ event: "delete_everything", name: "x" });

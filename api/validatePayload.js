@@ -1,4 +1,5 @@
 import { VALID_PRODUCT_IDS } from "./lib/validProductIds.js";
+import { WORKSHOP_CAPACITIES } from "./lib/workshopCapacities.js";
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[0-9]{10,11}$/;
@@ -82,6 +83,16 @@ export function validatePayload(body) {
     !isKnownProductId(body.productId, body.event)
   ) {
     return { valid: false, error: "Bilinmeyen ürün" };
+  }
+
+  if (body.event === "workshop_registration") {
+    const capacity = WORKSHOP_CAPACITIES[body.workshopType];
+    if (capacity === undefined) {
+      return { valid: false, error: "Bilinmeyen atölye türü" };
+    }
+    if (body.participantCount > capacity) {
+      return { valid: false, error: "Katılımcı sayısı kapasiteyi aşıyor" };
+    }
   }
 
   const payload = { event: body.event, source: "atolyekart" };

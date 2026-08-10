@@ -5,11 +5,13 @@ import { sendWebhookEvent } from "../lib/webhook.js";
 const { useState } = React;
 
 export function RegistrationForm({ workshop, onCancel }) {
+  const capacity = parseInt(workshop.capacity, 10);
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState(false);
   const [email, setEmail] = useState("");
   const [participantCount, setParticipantCount] = useState("");
+  const [participantCountError, setParticipantCountError] = useState(false);
   const [consent, setConsent] = useState(false);
   const [consentError, setConsentError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -23,6 +25,13 @@ export function RegistrationForm({ workshop, onCancel }) {
       return;
     }
     setPhoneError(false);
+
+    const count = Number(participantCount);
+    if (!Number.isInteger(count) || count < 1 || count > capacity) {
+      setParticipantCountError(true);
+      return;
+    }
+    setParticipantCountError(false);
 
     if (!consent) {
       setConsentError(true);
@@ -99,11 +108,21 @@ export function RegistrationForm({ workshop, onCancel }) {
       className: "card-form-input",
       type: "number",
       min: 1,
+      max: capacity,
       placeholder: "Katılımcı Sayısı",
       value: participantCount,
-      onChange: (event) => setParticipantCount(event.target.value),
+      onChange: (event) => {
+        setParticipantCount(event.target.value);
+        setParticipantCountError(false);
+      },
       required: true,
     }),
+    participantCountError &&
+      React.createElement(
+        "p",
+        { className: "card-form-message card-form-message--error" },
+        `Bu atölye en fazla ${capacity} kişiliktir.`
+      ),
     React.createElement(
       "label",
       { className: "card-form-checkbox" },
