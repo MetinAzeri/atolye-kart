@@ -1,5 +1,5 @@
 import { validatePayload } from "./validatePayload.js";
-import { isRateLimited, getClientIp } from "./rateLimit.js";
+import { isRateLimited, getClientIp, debugRequestCount } from "./rateLimit.js";
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -8,10 +8,15 @@ export default async function handler(req, res) {
   }
 
   const isPlaceOrder = req.body?.event === "place_order";
+  const clientIp = getClientIp(req);
   // ponytail: place_order sepetteki her satır için ayrı istek atıyor (bkz. CLAUDE.md),
   // çok satırlı sepet limite takılmasın diye muaf — sepet satır sayısı büyürse limit gerekebilir.
-  if (!isPlaceOrder && isRateLimited(getClientIp(req))) {
-    return res.status(429).json({ error: "Çok fazla istek, lütfen biraz bekleyin." });
+  if (!isPlaceOrder && isRateLimited(clientIp)) {
+    // TEŞHİS AMAÇLI GEÇİCİ debug alanı — teşhis bitince kaldır.
+    return res.status(429).json({
+      error: "Çok fazla istek, lütfen biraz bekleyin.",
+      debug: { key: clientIp, count: debugRequestCount(clientIp) },
+    });
   }
 
   const result = validatePayload(req.body);

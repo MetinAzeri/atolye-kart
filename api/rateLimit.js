@@ -16,6 +16,11 @@ export function isRateLimited(key, now = Date.now()) {
   return false;
 }
 
+// TEŞHİS AMAÇLI GEÇİCİ: 429 sebebini görmek için, kalıcı değil — teşhis bitince kaldır.
+export function debugRequestCount(key) {
+  return (requestLog.get(key) || []).length;
+}
+
 export function getClientIp(req) {
   const forwarded = req.headers["x-forwarded-for"];
   if (forwarded) return forwarded.split(",")[0].trim();
