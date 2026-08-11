@@ -30,6 +30,8 @@ Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki 
 - `request_stock_notification` — `StockNotifyForm.js`, stokta yok bildirimi formunda
 - `workshop_registration` — `RegistrationForm.js`, atölye kayıt formu gönderildiğinde (tarih + atölye türü dahil)
 
+`WEBHOOK_URL` (sunucu tarafında `api/atolye-kayit.js`'in okuduğu env değişkeni), n8n Cloud'daki "AtolyeKart - Rezervasyon" workflow'unun production webhook'una işaret eder (`https://ryazici.app.n8n.cloud/webhook/atolyekart-rezervasyon`). Bu tek webhook 3 event tipini birden alır — n8n tarafında bir Switch node `body.event` alanına bakıp doğru dala yönlendirir. Şu an sadece `workshop_registration` dalı doludur: Supabase `rezervasyonlar` tablosuna insert → Gmail bildirimi → `{"success": true}` yanıtı; diğer iki dal henüz boş. `N8N_CHAT_WEBHOOK_URL` bundan ayrı, farklı bir workflow'dur (chat agent) — karıştırılmamalı. **Önemli**: n8n'de workflow üzerinde değişiklik yapıldıktan sonra Publish edilmezse production webhook eski haliyle çalışmaya devam eder.
+
 ## Ana Bileşenler
 
 - `Navbar` (masaüstü yatay menü + mobil hamburger paneli), `Footer` — site geneli çerçeve
