@@ -1,8 +1,8 @@
-Canlı site: GitHub Pages üzerinden yayınlanıyor — https://metinazeri.github.io/atolye-kart/. main branch'e push edilen her değişiklik otomatik yayına yansır.
+Canlı site: Vercel üzerinden yayınlanıyor — https://atolye-kart.vercel.app. main branch'e push edilen her değişiklik otomatik yayına yansır (zero-config Vercel deployment, `vercel.json`'da `builds` tanımlı değil — Vite framework'ü otomatik algılanıp `vite build` çalıştırılır, çıktı `dist/`). `api/` altındaki dosyalar Vercel serverless function olarak deploy edilir.
 
 ## Mimari
 
-Build aracı yok — native ES modules + React (`esm.sh` CDN, `index.html`'deki importmap üzerinden). Bileşenler `React.createElement` ile yazılır, JSX/Babel yok.
+Standart bir Vite + React projesi (`vite` gerçek bir devDependency, `dev`/`build`/`preview` script'leri fiilen kullanılır) — `react`/`react-dom`/`react-router-dom`/`@supabase/supabase-js` gerçek npm dependency'leridir, `import React from "react"` gibi bare specifier'larla import edilir (CDN/importmap yok). Bileşenler yine de `React.createElement` ile yazılır, JSX/Babel kullanılmaz — bu bir kod stili tercihi, build kısıtlaması değil.
 
 **Routing**: `react-router-dom` (`HashRouter`, statik host'ta sunucu taraf yönlendirme gerekmediği için) — URL'ler `/#/...` formatında.
 

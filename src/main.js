@@ -1,6 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
 import { HashRouter, Routes, Route } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import { CartProvider } from "./context/CartContext.js";
 import { AuthProvider } from "./context/AuthContext.js";
 import { Navbar } from "./components/Navbar.js";
@@ -43,7 +44,8 @@ function App() {
           )
         ),
         React.createElement(Footer),
-        React.createElement(ChatWidget)
+        React.createElement(ChatWidget),
+        React.createElement(Analytics)
       )
     )
   );
