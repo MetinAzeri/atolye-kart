@@ -36,10 +36,12 @@ export function CheckoutForm({ onClose }: { onClose: () => void }) {
   }
 
   async function handleConfirmPayment() {
+    const orderId = crypto.randomUUID();
     await Promise.all(
       items.map((item) =>
         sendWebhookEvent({
           event: 'place_order',
+          orderId,
           name: user ? user.username : name.trim(),
           productId: item.productId,
           productName: item.name,

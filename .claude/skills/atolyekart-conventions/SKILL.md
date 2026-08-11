@@ -91,6 +91,7 @@ Gönderim noktası: `src/components/CheckoutForm.js`, sepetteki **her satır iç
 ```json
 {
   "event": "place_order",
+  "orderId": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
   "name": "Ayşe Yılmaz",
   "productId": "nar-cicegi-kase",
   "productName": "Nar Çiçeği Kase",
@@ -100,6 +101,8 @@ Gönderim noktası: `src/components/CheckoutForm.js`, sepetteki **her satır iç
   "source": "atolyekart"
 }
 ```
+
+`orderId`, `handleConfirmPayment` içinde `crypto.randomUUID()` ile bir kez üretilir; sepetteki tüm satırlar (Promise.all ile atılan ayrı istekler) aynı `orderId`'yi taşır — n8n tarafında bu satırların aynı siparişe ait olduğunu belirlemek için kullanılır.
 
 Kullanıcı giriş yapmışsa (`AuthContext`), iletişim formu atlanır: `name` alanına `user.username` yazılır, `phone`/`email` alanları **hiç gönderilmez** (payload'da anahtarları bile yer almaz).
 

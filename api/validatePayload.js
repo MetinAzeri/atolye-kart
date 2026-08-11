@@ -5,6 +5,7 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_PATTERN = /^[0-9]{10,11}$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const CUSTOM_PRODUCT_ID_PATTERN = /^custom-\d+$/;
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 // place_order'da Kendin Tasarla ürünleri katalogda değil, custom-<timestamp> id'siyle gelir.
 function isKnownProductId(productId, event) {
@@ -14,7 +15,7 @@ function isKnownProductId(productId, event) {
 
 const SCHEMAS = {
   place_order: {
-    required: ["name", "productId", "productName", "quantity"],
+    required: ["orderId", "name", "productId", "productName", "quantity"],
     optional: ["phone", "email"],
   },
   request_stock_notification: {
@@ -44,6 +45,7 @@ function isValidParticipants(value) {
 }
 
 const FIELD_VALIDATORS = {
+  orderId: (value) => typeof value === "string" && UUID_PATTERN.test(value),
   name: (value) => isNonEmptyString(value, 100),
   productId: (value) => isNonEmptyString(value, 100),
   productName: (value) => isNonEmptyString(value, 200),

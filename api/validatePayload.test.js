@@ -1,10 +1,13 @@
 import assert from "node:assert";
 import { validatePayload } from "./validatePayload.js";
 
+const SAMPLE_ORDER_ID = "3fa85f64-5717-4562-b3fc-2c963f66afa6";
+
 // place_order: geçerli, source spoof edilmeye çalışılıyor
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
@@ -13,6 +16,7 @@ import { validatePayload } from "./validatePayload.js";
   });
   assert.strictEqual(result.valid, true);
   assert.strictEqual(result.payload.source, "atolyekart");
+  assert.strictEqual(result.payload.orderId, SAMPLE_ORDER_ID);
   assert.strictEqual(result.payload.name, "Ayşe Yılmaz");
   assert.strictEqual(result.payload.quantity, 2);
 }
@@ -21,6 +25,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "kullanici_adi",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
@@ -35,9 +40,35 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// place_order: orderId eksik (zorunlu alan)
+{
+  const result = validatePayload({
+    event: "place_order",
+    name: "Ayşe Yılmaz",
+    productId: "nar-cicegi-kase",
+    productName: "Nar Çiçeği Kase",
+    quantity: 2,
+  });
+  assert.strictEqual(result.valid, false);
+}
+
+// place_order: orderId UUID formatında değil
+{
+  const result = validatePayload({
+    event: "place_order",
+    orderId: "not-a-uuid",
+    name: "Ayşe Yılmaz",
+    productId: "nar-cicegi-kase",
+    productName: "Nar Çiçeği Kase",
+    quantity: 2,
   });
   assert.strictEqual(result.valid, false);
 }
@@ -46,6 +77,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
@@ -59,6 +91,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
@@ -72,6 +105,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "nar-cicegi-kase",
     productName: "Nar Çiçeği Kase",
@@ -84,6 +118,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "olmayan-urun-id",
     productName: "Uydurma Ürün",
@@ -96,6 +131,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "custom-1735689600000",
     productName: "Özel Tasarım — Tabak",
@@ -108,6 +144,7 @@ import { validatePayload } from "./validatePayload.js";
 {
   const result = validatePayload({
     event: "place_order",
+    orderId: SAMPLE_ORDER_ID,
     name: "Ayşe Yılmaz",
     productId: "custom-abc",
     productName: "Özel Tasarım — Tabak",
