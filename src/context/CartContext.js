@@ -1,4 +1,5 @@
 import React from "react";
+import { trackEvent } from "../lib/events.js";
 
 const { createContext, useContext, useState, useMemo, useEffect } = React;
 
@@ -28,6 +29,7 @@ export function CartProvider({ children }) {
       ];
     });
     setToast(`${product.name} sepete eklendi`);
+    trackEvent("sepete_eklendi", product.id);
   }
 
   function incrementItem(productId) {

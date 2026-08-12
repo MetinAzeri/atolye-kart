@@ -3,6 +3,7 @@ import { products } from "../data/products.js";
 import { useCart } from "../context/CartContext.js";
 import { CheckoutForm } from "../components/CheckoutForm.js";
 import { CeramicPreview } from "../components/CeramicPreview.js";
+import { trackEvent } from "../lib/events.js";
 
 const { useState } = React;
 
@@ -78,7 +79,14 @@ export function CartPage() {
       !showCheckout &&
       React.createElement(
         "button",
-        { type: "button", className: "card-button", onClick: () => setShowCheckout(true) },
+        {
+          type: "button",
+          className: "card-button",
+          onClick: () => {
+            trackEvent("checkout_basladi");
+            setShowCheckout(true);
+          },
+        },
         "Siparişi Tamamla"
       ),
     showCheckout && React.createElement(CheckoutForm, { onCancel: () => setShowCheckout(false) })

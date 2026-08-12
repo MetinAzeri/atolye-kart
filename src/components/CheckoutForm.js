@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { sendWebhookEvent } from "../lib/webhook.js";
+import { trackEvent } from "../lib/events.js";
 import { useCart } from "../context/CartContext.js";
 import { useAuth } from "../context/AuthContext.js";
 import { PaymentForm } from "./PaymentForm.js";
@@ -56,6 +57,7 @@ export function CheckoutForm({ onCancel }) {
         })
       )
     );
+    trackEvent("siparis_tamamlandi");
     clearCart();
     setFeedback({ type: "success", text: "Ödemeniz alındı, siparişiniz oluşturuldu!" });
   }
